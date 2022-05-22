@@ -1,0 +1,43 @@
+{
+  "root": "libs/uikits",
+  "sourceRoot": "libs/uikits/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/uikits",
+        "tsConfig": "libs/uikits/tsconfig.lib.json",
+        "project": "libs/uikits/package.json",
+        "entryFile": "libs/uikits/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/uikits/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/uikits/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/uikits"],
+      "options": {
+        "jestConfig": "libs/uikits/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

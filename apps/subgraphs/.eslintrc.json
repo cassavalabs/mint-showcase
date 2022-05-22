@@ -1,0 +1,20 @@
+{
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@typescript-eslint/no-inferrable-types": "off"
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js"],
+      "rules": {}
+    }
+  ]
+}

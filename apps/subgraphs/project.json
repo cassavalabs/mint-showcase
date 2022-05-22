@@ -1,0 +1,62 @@
+{
+  "root": "apps/subgraphs",
+  "sourceRoot": "apps/subgraphs/src",
+  "projectType": "application",
+  "targets": {
+    "codegen": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "graph codegen"
+        }],
+        "cwd": "apps/subgraphs"
+      }
+    },
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "graph build"
+        }],
+        "cwd": "apps/subgraphs"
+      }
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "graph deploy --product hosted-service {args.name}"
+        ],
+        "cwd": "apps/subgraphs"
+      }
+    },
+    "create-local": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "graph create --node {args.node}"
+        }],
+        "cwd": "apps/subgraphs"
+      }
+    },
+    "remove-local": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "graph remove --node {args.node}"
+        }],
+        "cwd": "apps/subgraphs"
+      }
+    },
+    "deploy-local": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "graph deploy --node {args.node} --ipfs {args.ipfs} {args.name}"
+        }],
+        "cwd": "apps/subgraphs"
+      }
+    }
+  },
+  "tags": []
+}
