@@ -5,7 +5,6 @@ import { getConnection } from "../libs/mongodb";
 
 const schema = new Schema<Asset>(
   {
-    blockchain: { type: String, required: true },
     token_id: { type: String, required: true },
     image_uri: { type: String, required: true },
     name: { type: String, required: true },

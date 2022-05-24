@@ -4,11 +4,11 @@ import {
   StyledTextbox,
   Text,
   FormGroup,
+  FormColumn,
   FlexBetween,
   FlexColumn,
   StyledCheckbox,
 } from "@cassavaland/uikits";
-import { FormColumnGap } from "../Styles";
 import { useStore } from "../../../state/mintForm";
 
 export const Attributes = () => {
@@ -84,20 +84,20 @@ export const Attributes = () => {
         attributes.map((trait, index) => (
           <FormGroup key={index}>
             <FlexBetween>
-              <FormColumnGap>
+              <FormColumn>
                 <StyledTextbox
                   placeholder="E.g. size"
                   value={trait.trait_type}
                   onChange={(e) => handleAttributeChange(e, index, "key")}
                 />
-              </FormColumnGap>
-              <FormColumnGap>
+              </FormColumn>
+              <FormColumn>
                 <StyledTextbox
                   placeholder="E.g. XL"
                   value={trait.value}
                   onChange={(e) => handleAttributeChange(e, index, "value")}
                 />
-              </FormColumnGap>
+              </FormColumn>
             </FlexBetween>
           </FormGroup>
         ))}

@@ -52,17 +52,12 @@ export type MintFormCollection = {
 };
 
 export interface MintFormData {
-  onSale: boolean;
-  pricingModel: "Auction" | "Bid" | "BuyNow";
-  price: string;
-  reservedPrice: string;
-  startTime: string;
-  endTime: string;
   showProperties: boolean;
   collections: MintFormCollection[];
   activeCollection: MintFormCollection;
-  royalty: number | string;
-  tokenId: number | string;
+  royalty: string;
+  tokenId: string;
+  quantity: string;
 }
 
 export interface MetaDataAtribute {
@@ -106,7 +101,6 @@ export interface Account {
 }
 
 export interface Asset {
-  blockchain: string;
   token_id: string;
   image_uri: string;
   name: string;
@@ -158,8 +152,14 @@ export interface Category {
 }
 
 export interface AddCollectionPayload {
-  collection: AssetCollection;
-  owner: Account;
+  blockchain: string;
+  address: string;
+  name: string;
+  symbol: string;
+  description?: string;
+  external_link?: string;
+  owner: string;
+  slug: string;
 }
 
 export interface SocialContacts {
@@ -168,4 +168,11 @@ export interface SocialContacts {
   discord?: string;
   instagram?: string;
   telegram?: string;
+}
+
+export interface ERC721NftContract {
+  id: string;
+  name: string;
+  symbol: string;
+  totalNfts: string;
 }

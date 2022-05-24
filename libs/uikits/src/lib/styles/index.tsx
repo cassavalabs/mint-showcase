@@ -145,6 +145,21 @@ export const FormLabel = styled(Text)`
   margin-bottom: 0.5rem;
 `;
 
+export const FormRow = styled(FlexBetween)`
+  width: 100%;
+  ${media.mobileL`
+flex-direction: column;
+`};
+`;
+
+export const FormColumn = styled(Flex)`
+  width: 100%;
+  max-width: calc(50% - 0.5rem);
+  ${media.mobileL`
+  max-width: 100%;
+`};
+`;
+
 export const Page = styled(FlexColumn)<{ centered?: boolean }>`
   align-items: ${({ centered }) => (centered ? "center" : null)};
 `;

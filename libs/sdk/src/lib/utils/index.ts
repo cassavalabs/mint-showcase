@@ -60,12 +60,25 @@ export function decodeURI(uri: string) {
   }
 }
 
-type ExplorerDataTypes = "address" | "block" | "tx" | "token";
+type ExplorerDataTypes = "account" | "block" | "tx";
 
 export function getExplorerURL(
   chainId: SupportedChainId,
   data: string,
   type: ExplorerDataTypes
 ) {
-  return `${EXPLORER_URLS[chainId]}/${type}/${data}`;
+  switch (type) {
+    case "account":
+      return `${EXPLORER_URLS[chainId]}/account/${data}`;
+
+    case "block":
+      return `${EXPLORER_URLS[chainId]}/block/${data}`;
+
+    case "tx":
+      return `${EXPLORER_URLS[chainId]}/extrinsic/${data}`;
+
+    default:
+      return EXPLORER_URLS[chainId];
+  }
+  // return `${EXPLORER_URLS[chainId]}/${type}/${data}`;
 }

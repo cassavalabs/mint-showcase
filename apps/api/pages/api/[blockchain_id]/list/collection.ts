@@ -7,7 +7,7 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(403).send({ error: "Only POST method allowed" });
   }
   const { blockchain_id } = req.query;
-  const { owner, collection: assetCollection }: AddCollectionPayload = req.body;
+  const { owner, address, ...rest }: AddCollectionPayload = req.body;
 
   //TODO: add validation
 
@@ -15,20 +15,19 @@ const handler: NextApiHandler = async (req, res) => {
     const accountModel = await AccountModel();
     const account = await accountModel.findOneAndUpdate(
       {
-        address: owner.address,
+        address: owner,
       },
-      { ...owner },
       { new: true, upsert: true }
     );
 
     const assetCollectionModel = await AssetCollectionModel();
     await assetCollectionModel.findOneAndUpdate(
       {
-        address: assetCollection.address,
+        address: address,
         owner: account._id,
         blockchain: blockchain_id,
       },
-      { ...assetCollection },
+      { ...rest },
       {
         new: true,
         upsert: true,

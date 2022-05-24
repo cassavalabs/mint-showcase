@@ -2,13 +2,9 @@ import styled from "styled-components";
 import type { ReactNode } from "react";
 import {
   BaseButton,
-  Flex,
-  FlexBetween,
   FlexColumn,
   FlexCenter,
-  IconButton,
   StyledInput,
-  media,
   Text,
   CheckIcon,
   PrimaryButton,
@@ -20,11 +16,6 @@ export const Form = styled(FlexColumn)`
   display: flex;
   flex-direction: column;
   margin: 1rem 0rem;
-`;
-
-export const FormColumnGap = styled(Flex)`
-  width: 100%;
-  max-width: calc(50% - 0.5rem);
 `;
 
 export const Textbox = styled(StyledInput)`
@@ -39,19 +30,6 @@ export const Textbox = styled(StyledInput)`
   [type="number"] {
     -moz-appearance: textfield;
   }
-`;
-
-export const FormRow = styled(FlexBetween)`
-  ${media.mobileL`
-flex-direction: column;
-`};
-`;
-
-export const FormColumn = styled(Flex)`
-  max-width: calc(50% - 0.5rem);
-  ${media.mobileL`
-  max-width: 100%;
-`};
 `;
 
 export const SelectButton = styled(BaseButton)`

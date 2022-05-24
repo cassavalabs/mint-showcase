@@ -1,5 +1,6 @@
 import shallow from "zustand/shallow";
 import { useEffect } from "react";
+import { ContractTransaction } from "ethers";
 import {
   CREATE_NFT_STEPS,
   pinFileToIPFS,
@@ -21,7 +22,12 @@ import {
   useERC1155CassavaContract,
 } from "../../../hooks/useContract";
 
-export const MintForm = () => {
+interface MintFormProps {
+  isMultiple?: boolean;
+}
+
+export const MintForm = (props: MintFormProps) => {
+  const { isMultiple } = props;
   const [
     collection,
     file,
@@ -30,6 +36,8 @@ export const MintForm = () => {
     description,
     external_url,
     tokenId,
+    royalty,
+    quantity,
     setTokenId,
     setActiveCollection,
     setCollections,
@@ -43,6 +51,8 @@ export const MintForm = () => {
       state.description,
       state.external_url,
       state.tokenId,
+      state.royalty,
+      state.quantity,
       state.setTokenId,
       state.setActiveCollection,
       state.setCollections,
@@ -55,26 +65,44 @@ export const MintForm = () => {
 
   const erc721 = useERC721CassavaContract(collection.address);
   const erc1155 = useERC1155CassavaContract(collection.address);
+
   const { account, chainId } = useActiveWeb3();
   const [setProgress, updateProgress] = useProgressStore(
     (state) => [state.setProgress, state.updateProgress],
     shallow
   );
 
+  //Load the users collections
   useEffect(() => {
     const erc721CollectionAddress = getERC721CollectionAddress(chainId);
     const erc1155CollectionAddress = getERC721CollectionAddress(chainId);
-    setActiveCollection({
-      name: "CassavaLand",
-      address: erc721CollectionAddress,
-    });
-    setCollections([{ name: "CassavaLand", address: erc721CollectionAddress }]);
-  }, [chainId, setActiveCollection, setCollections]);
 
-  const validate = () => !file || !erc721 || !account || !name;
+    if (isMultiple) {
+      setActiveCollection({
+        name: "CassavaLand",
+        address: erc1155CollectionAddress,
+      });
+    } else {
+      setActiveCollection({
+        name: "CassavaLand",
+        address: erc721CollectionAddress,
+      });
+    }
+
+    setCollections([{ name: "CassavaLand", address: erc721CollectionAddress }]);
+  }, [chainId, setActiveCollection, setCollections, isMultiple]);
+
+  const validateERC721 = () => !file || !erc721 || !account || !name;
+
+  const validateERC1155 = () =>
+    !file || !erc1155 || !quantity || !account || !name;
+
+  const validate = () => (isMultiple ? validateERC1155() : validateERC721());
 
   const handleSubmit = async () => {
     if (validate()) return;
+
+    let trx: ContractTransaction;
 
     setProgress(CREATE_NFT_STEPS);
     toggleProgressModal();
@@ -93,9 +121,34 @@ export const MintForm = () => {
     const { uri } = await pinJSONToIPFS(metadata);
     updateProgress(1, 2);
 
-    const tx = await erc721.mint(uri);
+    //check token standard and if royalty is set
+    if (isMultiple) {
+      if (parseFloat(royalty) > 0) {
+        trx = await erc1155.mintWithRoyalty(
+          quantity,
+          uri,
+          account,
+          parseFloat(royalty) * 100
+        );
+      } else {
+        trx = await erc1155.mint(quantity, uri);
+      }
+    } else {
+      if (parseFloat(royalty) > 0) {
+        trx = await erc721.mintWithRoyalty(
+          uri,
+          account,
+          parseFloat(royalty) * 100
+        );
+      } else {
+        trx = await erc721.mint(uri);
+      }
+    }
+
     Alert("Awaiting confirmation", "info");
-    const receipt = await tx.wait();
+
+    const receipt = await trx.wait();
+
     setTxHash(receipt.transactionHash);
     updateProgress(2, 3);
 
@@ -117,7 +170,7 @@ export const MintForm = () => {
   return (
     <Form>
       <AssetUpload />
-      <FormData />
+      <FormData isMultiple={isMultiple} />
       <SubmitButton onClick={handleSubmit} disabled={validate()}>
         Create
       </SubmitButton>

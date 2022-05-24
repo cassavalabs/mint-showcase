@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useReducer } from "react";
+import axios from "axios";
+import { paramCase } from "param-case";
 import {
   Flex,
   FormGroup,
@@ -13,6 +15,7 @@ import {
 import { SubmitButton } from "../Form/Styles";
 import { useModal } from "../../contexts/application";
 import { useNftFactoryContract } from "../../hooks/useContract";
+import { useActiveWeb3 } from "../../hooks/useWeb3";
 import { useProgressStore } from "../../state/progress";
 
 const ModalContent = styled(Flex)`
@@ -47,11 +50,17 @@ const COLLECTION_STEPS = [
     description: "Please wait while we deploy code for the new smart contract.",
     status: "processing",
   },
+  {
+    title: "Indexer",
+    description: "Waiting for indexer, to store the collection data.",
+    status: "pending",
+  },
 ];
 
 export default function CreateCollection() {
   const { isCollectionModalOpen, toggleCollectionModal, toggleProgressModal } =
     useModal();
+  const { chainId, account } = useActiveWeb3();
   const setProgress = useProgressStore((state) => state.setProgress);
   const contract = useNftFactoryContract();
 
@@ -68,7 +77,7 @@ export default function CreateCollection() {
   };
 
   const validate = () => {
-    return inputs.name !== "" && inputs.symbol !== "";
+    return inputs.name !== "" && inputs.symbol !== "" && chainId && account;
   };
 
   const handleSubmit = async () => {
@@ -93,6 +102,17 @@ export default function CreateCollection() {
       console.log("Owner " + creatorAddress);
       console.log("Name " + name);
       console.log("Symbol " + symbol);
+
+      //Index data to local db
+      await axios.post("", {
+        blockchain: chainId,
+        address: collectionAddress,
+        name: name,
+        symbol: symbol,
+        owner: creatorAddress,
+        description: inputs.description,
+        slug: paramCase(name),
+      });
     }
 
     toggleProgressModal();
