@@ -7,29 +7,12 @@ export type CollectionCardProps = Omit<AssetCollection, "owner"> & {
 };
 
 export interface NFTCardProps {
-  creator: {
-    avatar: string;
-    name: string;
-    url: string;
-    verified: boolean;
-  };
-  collection: {
-    avatar: string;
-    name: string;
-    url: string;
-    verified: boolean;
-  };
-  owner?: {
-    avatar: string;
-    name: string;
-    url: string;
-    verified: boolean;
-  };
-  token: {
-    image: string;
-    name: string;
-    url: string;
-  };
+  token_id: string;
+  collection_address: string;
+  collection_name: string;
+  blockchain: string;
+  owner: string;
+  value: TokenMetaData;
 }
 
 export type MintFormCollection = {

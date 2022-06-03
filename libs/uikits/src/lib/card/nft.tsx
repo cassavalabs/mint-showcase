@@ -56,13 +56,28 @@ const CardTokenTitle = styled(CardLink)`
   }
 `;
 
+const CardSubTitle = styled(CardTokenTitle)`
+  font-weight: 500;
+  color: ${({ theme }) => theme.text200};
+  font-size: 0.75rem;
+`;
+
 export const NFTCard = (props: NFTCardProps) => {
-  const { token } = props;
+  const {
+    value: token,
+    blockchain,
+    token_id,
+    collection_name,
+    collection_address,
+    owner,
+  } = props;
+
+  const assetUrl = `/assets/${blockchain}/${collection_address}/${token_id}`;
 
   return (
     <Card>
       <CardHeader>
-        <Link href={token.url} passHref>
+        <Link href={assetUrl} passHref>
           <CardLink>
             <TokenImage
               src={token.image}
@@ -75,7 +90,10 @@ export const NFTCard = (props: NFTCardProps) => {
         </Link>
       </CardHeader>
       <CardBody>
-        <Link href={token.name} passHref>
+        <Link href={`/${owner}/collection/${collection_address}`} passHref>
+          <CardSubTitle>{collection_name}</CardSubTitle>
+        </Link>
+        <Link href={assetUrl} passHref>
           <CardTokenTitle>
             <span>{token.name}</span>
           </CardTokenTitle>

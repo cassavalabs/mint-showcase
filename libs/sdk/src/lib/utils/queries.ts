@@ -1,7 +1,7 @@
 import { gql, request } from "graphql-request";
 import axios from "axios";
 import { ALL_SUBGRAPH_URL } from "../constants/subgraphs";
-import { UserERC721Nfts } from "../typings";
+import { UserERC721Nfts, NFTCardProps } from "../typings";
 import { GetMetadata } from "./get-metadata";
 
 export const getUserERC721Nfts = async (owner: string, chainId: number) => {
@@ -44,12 +44,14 @@ export const getUserERC721Nfts = async (owner: string, chainId: number) => {
           token_id: erc721.tokenId,
           collection_address: erc721.nftContract.id,
           collection_name: erc721.nftContract.name,
+          blockchain: chainId.toString(),
+          owner,
           ...rest,
         });
       }
     });
 
-    return metadata;
+    return metadata as NFTCardProps[];
   } catch (error) {
     console.error("Request failed ", +error);
     return [];
