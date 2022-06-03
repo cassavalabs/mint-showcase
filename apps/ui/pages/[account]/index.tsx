@@ -1,10 +1,12 @@
 import { Grid } from "@cassavaland/uikits";
-import { FAKE_DATA, getNftCardWidth } from "@cassavaland/sdk";
+import { FAKE_DATA, getNftCardWidth, withSessionSsr } from "@cassavaland/sdk";
 import Layout from "../../components/Layouts/Profile";
+import { fetchAccount } from "../../libs/fetch-account";
 
-export default function Collected() {
+export default function Collected({ user }) {
+  console.log("AM User " + JSON.stringify(user));
   return (
-    <Layout>
+    <Layout account={user}>
       <Grid
         dataz={FAKE_DATA}
         getCardWidth={getNftCardWidth}
@@ -14,3 +16,33 @@ export default function Collected() {
     </Layout>
   );
 }
+
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req, params }) {
+    const userWallet = req.session.account;
+    const username = params.account as string;
+
+    if (!userWallet && username === "account") {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+
+    const userAccount = await fetchAccount(userWallet, username);
+
+    if (!userAccount) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        user: userAccount,
+      },
+    };
+  }
+);

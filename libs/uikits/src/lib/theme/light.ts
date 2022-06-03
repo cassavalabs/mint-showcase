@@ -29,7 +29,7 @@ export const lightTheme: DefaultTheme = {
   primary100: "#2172e5",
   primary200: "#133156",
   primary300: "#2f8AF5",
-  primary400: "#",
+  primary400: "#2081E2",
 
   // Secondary
   secondary100: "#3e4042",

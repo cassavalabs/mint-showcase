@@ -22,14 +22,14 @@ export const darkTheme: DefaultTheme = {
   text100: "#c67284",
   text200: "#c3c5cb",
   text300: "#ffffff",
-  text400: "",
+  text400: "#565A69",
   textSuccess: "#10D078",
 
   // Primary
   primary100: "#2172e5",
   primary200: "#133156",
   primary300: "#2f8AF5",
-  primary400: "#",
+  primary400: "#2081E2",
 
   // Secondary
   secondary100: "#3e4042",

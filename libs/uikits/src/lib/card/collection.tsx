@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { CollectionCardProps } from "@cassavaland/sdk";
 import { FlexColumn, FlexCenter } from "../styles";
 import { RoundAvatar } from "../avatar";
+import { GradientAvatar } from "../identicon";
 import { Text } from "../text";
 
 const Card = styled(FlexColumn)`
@@ -21,7 +22,11 @@ const CardHeader = styled(FlexCenter)`
   min-height: 13rem;
   height: 13rem;
   position: relative;
-  background: ${({ theme }) => theme.bg100};
+  background-color: ${({ theme }) => theme.bg300};
+`;
+
+const PushUp = styled.div`
+  margin-top: -2rem;
 `;
 
 const GroupTitle = styled(FlexCenter)`
@@ -62,40 +67,54 @@ const Description = styled(Title)`
 `;
 
 export const CollectionCard = (props: CollectionCardProps) => {
-  const { creator, collection } = props;
+  const { owner, slug, address: collection_address, banner_image_uri } = props;
 
   return (
-    <Card>
-      <CardHeader>
-        <Image
-          src={collection.cover}
-          layout="fill"
-          objectFit="cover"
-          alt={collection.name}
-        />
-      </CardHeader>
-      <RoundAvatar
-        size={4}
-        mt="-2rem"
-        src={creator.avatar}
-        width={64}
-        height={64}
-        alt={creator.name}
-      />
-      <GroupTitle>
-        <Title>{collection.name}</Title>
-      </GroupTitle>
-      <FlexCenter>
-        <Text size={0.875}>
-          By{" "}
-          <Link href={creator.url} passHref>
-            <ProfileLink>{creator.name}</ProfileLink>
-          </Link>
-        </Text>
-      </FlexCenter>
-      <Description>
-        <span>{collection.description}</span>
-      </Description>
-    </Card>
+    <Link href={`/collection/${slug ? slug : collection_address}`}>
+      <Card>
+        <CardHeader>
+          {banner_image_uri && (
+            <Image
+              src={banner_image_uri}
+              layout="fill"
+              objectFit="cover"
+              alt={props.name}
+            />
+          )}
+        </CardHeader>
+        <PushUp>
+          {owner.avatar_uri ? (
+            <RoundAvatar
+              size={4}
+              src={owner.avatar_uri}
+              width={64}
+              height={64}
+              alt={owner.display_name}
+            />
+          ) : (
+            <GradientAvatar size={64} seed={collection_address} />
+          )}
+        </PushUp>
+        <GroupTitle>
+          <Title>{props.name}</Title>
+        </GroupTitle>
+        <FlexCenter>
+          <Text size={0.875}>
+            By{" "}
+            <Link
+              href={`/${owner.username ? owner.username : owner.address}`}
+              passHref
+            >
+              <ProfileLink>
+                {owner.username ? owner.username : "Halloboy"}
+              </ProfileLink>
+            </Link>
+          </Text>
+        </FlexCenter>
+        <Description>
+          <span>{props.description}</span>
+        </Description>
+      </Card>
+    </Link>
   );
 };

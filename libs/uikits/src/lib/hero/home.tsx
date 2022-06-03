@@ -168,7 +168,7 @@ export const HomeHero = () => {
             across multiple blockchains.
           </SubTitle>
           <ButtonGroup>
-            <Link href="/explore">
+            <Link href="/collections">
               <ExploreButton>Explore</ExploreButton>
             </Link>
             <Link href="/create">

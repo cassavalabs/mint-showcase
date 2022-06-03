@@ -16,10 +16,6 @@ import {
   media,
   LightModeIcon,
   DarkModeIcon,
-  PhotosIcon,
-  CollectiblesIcon,
-  ArtIcon,
-  MusicIcon,
   AllIcon,
   TwitterIcon,
   InstagramIcon,
@@ -33,7 +29,6 @@ import {
   WalletIcon,
   LanguageIcon,
   ChevronLeftIcon,
-  GameIcon,
 } from "@cassavaland/uikits";
 import { useLocale } from "../../contexts/localization";
 import { useDarkMode } from "../../contexts/theme";
@@ -262,51 +257,11 @@ export const MobileMenu = () => {
             />
           </MenuItem>
           <MenuItem>
-            <InternalLink href="/collection/all">
+            <InternalLink href="/collections">
               <LeftIcon>
                 <AllIcon />
               </LeftIcon>
               All NFTs
-            </InternalLink>
-          </MenuItem>
-          <MenuItem>
-            <InternalLink href="/collection/art">
-              <LeftIcon>
-                <ArtIcon />
-              </LeftIcon>
-              Art
-            </InternalLink>
-          </MenuItem>
-          <MenuItem>
-            <InternalLink href="/collection/photography">
-              <LeftIcon>
-                <PhotosIcon />
-              </LeftIcon>
-              Photography
-            </InternalLink>
-          </MenuItem>
-          <MenuItem>
-            <InternalLink href="/collection/games">
-              <LeftIcon>
-                <GameIcon />
-              </LeftIcon>
-              Games
-            </InternalLink>
-          </MenuItem>
-          <MenuItem>
-            <InternalLink href="/collection/music">
-              <LeftIcon>
-                <MusicIcon />
-              </LeftIcon>
-              Music
-            </InternalLink>
-          </MenuItem>
-          <MenuItem>
-            <InternalLink href="/collection/collectibles">
-              <LeftIcon>
-                <CollectiblesIcon />
-              </LeftIcon>
-              Collectibles
             </InternalLink>
           </MenuItem>
         </MenuItems>

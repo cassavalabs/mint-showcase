@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaChevronDown } from "react-icons/fa";
 
 const CollapsibleWrapper = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.secondary100};
+  border-bottom: 0.1rem solid ${({ theme }) => theme.secondary100};
   overflow: hidden;
 `;
 
@@ -16,6 +16,7 @@ const CollapsibleHeader = styled.div`
   line-height: 1.25;
   font-weight: 600;
   padding: 1.25rem;
+  background-color: ${({ theme }) => theme.bg300};
 `;
 
 const CollapsibleChevron = styled.div<{ isOpen?: boolean }>`

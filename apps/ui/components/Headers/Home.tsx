@@ -14,8 +14,8 @@ import {
   MenuIcon,
 } from "@cassavaland/uikits";
 import Tippy from "@tippyjs/react";
-import { ExploreDropdown, HelpDropdown, ProfileDropdown } from "../Dropdown";
-import { Search } from "../Search";
+import { ProfileDropdown } from "../Dropdown";
+// import { Search } from "../Search";
 import { useActiveChainId } from "../../contexts/application";
 import { useDarkMode } from "../../contexts/theme";
 import { useStore } from "../../state/sidebar";
@@ -81,9 +81,7 @@ const RoundImage = styled(Image)`
 `;
 
 export const Header = () => {
-  const [exploreInst, setExploreInst] = useState<any>(null);
   const [profileInst, setProfileInst] = useState<any>(null);
-  const [resourceInst, setResourceInst] = useState<any>(null);
   const { darkMode } = useDarkMode();
   const setActiveSidebar = useStore((state) => state.setActiveSidebar);
   const toggleSidebar = useStore((state) => state.toggleSidebar);
@@ -111,25 +109,11 @@ export const Header = () => {
             href="/"
           />
           <SearchBox>
-            <Search placeholder="Search items, collections, and accounts" />
+            {/* <Search placeholder="Search items, collections, and accounts" /> */}
           </SearchBox>
           <NavbarRight>
             <MdScreenMenu>
-              <Tippy
-                content={
-                  exploreInst ? <ExploreDropdown hide={exploreInst.hide} /> : ""
-                }
-                interactive
-                placement="bottom-start"
-                allowHTML
-                arrow={false}
-                onCreate={setExploreInst}
-                offset={[0, 0]}
-              >
-                <TippyBox>
-                  <NavLink href="/explore">Explore</NavLink>
-                </TippyBox>
-              </Tippy>
+              <NavLink href="/collections">Explore</NavLink>
               <Tippy
                 content={
                   profileInst ? <ProfileDropdown hide={profileInst.hide} /> : ""
@@ -147,26 +131,6 @@ export const Header = () => {
                       <UserCircleIcon />
                     </StyledIcon>
                     Profile
-                  </NavLink>
-                </TippyBox>
-              </Tippy>
-              <Tippy
-                content={
-                  resourceInst ? <HelpDropdown hide={resourceInst.hide} /> : ""
-                }
-                interactive
-                placement="bottom-start"
-                allowHTML
-                arrow={false}
-                onCreate={setResourceInst}
-                offset={[0, 0]}
-              >
-                <TippyBox>
-                  <NavLink href="/resources">
-                    {/* <StyledIcon>
-                      <HelpIcon />
-                    </StyledIcon> */}
-                    Resources
                   </NavLink>
                 </TippyBox>
               </Tippy>

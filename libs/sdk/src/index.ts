@@ -1,8 +1,10 @@
+export * from "./lib/accounts";
 export * from "./lib/connectors";
 export * from "./lib/constants/chains";
 export * from "./lib/constants/chain-info";
 export * from "./lib/constants/data";
 export * from "./lib/constants/steps";
+export * from "./lib/constants/messages";
 export * from "./lib/constants/wallets";
 export * from "./lib/meta-data";
 export * from "./lib/typechain";
@@ -11,4 +13,6 @@ export * from "./lib/utils/get-card-width";
 export * from "./lib/utils/get-contract-address";
 export * from "./lib/utils/get-library";
 export * from "./lib/utils/get-metadata";
+export * from "./lib/session";
+export * from "./lib/utils/queries";
 export * from "./lib/utils";

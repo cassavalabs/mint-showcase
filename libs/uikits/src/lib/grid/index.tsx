@@ -30,7 +30,6 @@ export const Grid = ({ dataz, getCardWidth, cardHeight, type }: GridProps) => {
           const itemData = memoizedData({ columnCount, dataz });
           const GridCell =
             type === "collection" ? CollectionGridCell : NftGridCell;
-          console.log("inner height " + height);
           return (
             <FixedSizeGrid
               className="nft-grid"

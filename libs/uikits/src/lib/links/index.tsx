@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import type { ReactNode } from "react";
-import { darken } from "polished";
+import { darken, rgba } from "polished";
 import Link, { LinkProps } from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -34,6 +34,20 @@ export const StyledLink = styled.a`
     color: ${({ theme }) => theme.text300};
     background-color: ${({ theme }) => theme.bg100};
     text-decoration: none;
+  }
+`;
+
+export const StyledTextLink = styled.a`
+  font-weight: 500;
+  color: ${({ theme }) => theme.primary400};
+  max-width: 26rem;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease-in-out;
+  :hover {
+    color: ${({ theme }) => rgba(theme.primary400, 0.7)};
   }
 `;
 
@@ -128,6 +142,16 @@ export const InternalLink = (props: CommonLinkProps) => {
   return (
     <Link {...rest} passHref>
       <StyledLink onClick={onClick}>{children}</StyledLink>
+    </Link>
+  );
+};
+
+export const TextLink = (props: CommonLinkProps) => {
+  const { children, ...rest } = props;
+
+  return (
+    <Link {...rest} passHref>
+      <StyledTextLink>{children}</StyledTextLink>
     </Link>
   );
 };

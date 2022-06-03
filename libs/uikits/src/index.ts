@@ -1,6 +1,7 @@
 import media from "./lib/theme/media";
 
 export * from "./lib/alert";
+export * from "./lib/assets";
 export * from "./lib/avatar";
 export * from "./lib/banner";
 export * from "./lib/button";
@@ -21,7 +22,6 @@ export * from "./lib/links";
 export * from "./lib/loader";
 export * from "./lib/modal";
 export * from "./lib/styles";
-export * from "./lib/table";
 export * from "./lib/text";
 export * from "./lib/theme";
 export * from "./lib/theme/styled";

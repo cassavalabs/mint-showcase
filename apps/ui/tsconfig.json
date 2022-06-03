@@ -20,6 +20,6 @@
     "**/*.jsx",
     "next-env.d.ts",
     "styled.d.ts"
-  ],
+, "../../libs/sdk/src/lib/utils/username.ts", "libs/mongodb.ts"  ],
   "exclude": ["node_modules", "jest.config.ts"]
 }

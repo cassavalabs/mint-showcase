@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useReducer } from "react";
 import axios from "axios";
-import { paramCase } from "param-case";
 import {
   Flex,
   FormGroup,
@@ -111,7 +110,6 @@ export default function CreateCollection() {
         symbol: symbol,
         owner: creatorAddress,
         description: inputs.description,
-        slug: paramCase(name),
       });
     }
 

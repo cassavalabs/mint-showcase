@@ -20,19 +20,11 @@ import {
   EditIcon,
   HorizontalDivider,
   CollectionsIcon,
-  NavButtonLink,
-  FolderIcon,
-  FavouriteIcon,
-  HistoryIcon,
-  OfferIcon,
-  ChevronDownIcon,
   RoundAvatar,
   GradientAvatar,
   CollectiblesIcon,
 } from "@cassavaland/uikits";
-import { shortenAddress } from "@cassavaland/sdk";
-// import { CreatedDropdown, OffersDropdown } from "../../components/Dropdown";
-import { useActiveWeb3 } from "../../hooks/useWeb3";
+import { shortenAddress, Account } from "@cassavaland/sdk";
 
 const Wrapper = styled(Container)`
   display: flex;
@@ -96,20 +88,6 @@ const StyledIcon = styled(Flex)`
   }
 `;
 
-const RightIcon = styled(Flex)`
-  padding-left: 0.5rem;
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
-`;
-
-const StyledNumber = styled.span`
-  padding-left: 0.5rem;
-  display: flex;
-  font-size: 0.75rem;
-`;
-
 const SocialLinks = styled(FlexCenter)`
   margin-bottom: 1rem;
   & > a:not(:last-child) {
@@ -117,16 +95,10 @@ const SocialLinks = styled(FlexCenter)`
   }
 `;
 
-export const ProfileHeader = () => {
-  const { pathname, query } = useRouter();
+export const ProfileHeader = ({ user }: { user: Account }) => {
+  const { query, asPath, push } = useRouter();
   const { account } = query;
-  const { chainId, account: walletAddress } = useActiveWeb3();
-
-  const isCreatedPage =
-    pathname === "/[account]/items-created" ||
-    pathname === "/[account]/collections-created";
-  const isBidPage =
-    pathname === "/[account]/bids" || pathname === "/[account]/bids-made";
+  const isAccount = asPath === "/account";
 
   const handleOnShown = (instance: any) => {
     setTimeout(() => {
@@ -138,16 +110,20 @@ export const ProfileHeader = () => {
     <Wrapper>
       <Banner />
       <Profile>
-        <RoundAvatar
-          size={10.5}
-          src="/gorilla.jpg"
-          layout="fill"
-          alt="avatar"
-          editable
-        />
+        {user.avatar_uri ? (
+          <RoundAvatar
+            size={10.5}
+            src={user.avatar_uri}
+            layout="fill"
+            alt={user.display_name ?? "avatar"}
+            editable={isAccount}
+          />
+        ) : (
+          <GradientAvatar size={168} seed={user.address} />
+        )}
         <ProfileDetails>
           <Text size={2} weight={600} color="text300">
-            Anonymous Plebbit
+            {user.display_name ?? "Unnamed"}
           </Text>
           <Tippy
             content="Copied"
@@ -156,19 +132,10 @@ export const ProfileHeader = () => {
             onShow={handleOnShown}
           >
             <ProfileWalletAddressButton>
-              {chainId && (
-                <Image
-                  src={`/${chainId}.png`}
-                  width={16}
-                  height={16}
-                  alt="account"
-                />
-              )}
-              {walletAddress && (
-                <span style={{ marginLeft: "0.5rem" }}>
-                  {shortenAddress(walletAddress)}
-                </span>
-              )}
+              <Image src="/1284.png" width={16} height={16} alt="account" />
+              <span style={{ marginLeft: "0.5rem" }}>
+                {shortenAddress(user.address)}
+              </span>
             </ProfileWalletAddressButton>
           </Tippy>
           <SocialLinks>
@@ -179,17 +146,16 @@ export const ProfileHeader = () => {
               nature="twitter"
             />
           </SocialLinks>
-          <Text mWidth="37rem">
-            BAYC is a collection of 10,000 Bored Ape NFTs. Owning a Bored Ape
-            doubles as your membership to the Club.
-          </Text>
+          {user.bio && <Text mWidth="37rem">{user.bio}</Text>}
           <ButtonGroup>
             <ShareProfileButton>
               <ShareIcon /> Share
             </ShareProfileButton>
-            <EditProfileButton>
-              <EditIcon /> Edit
-            </EditProfileButton>
+            {isAccount && (
+              <EditProfileButton onClick={() => push("/account/settings")}>
+                <EditIcon /> Edit
+              </EditProfileButton>
+            )}
           </ButtonGroup>
         </ProfileDetails>
         <ProfileNav>
@@ -202,77 +168,12 @@ export const ProfileHeader = () => {
                 </StyledIcon>
                 Collections
               </NavLink>
-              <NavLink href={`/${account}/items-created`} scroll={false}>
+              <NavLink href={`/${account}`} scroll={false}>
                 <StyledIcon>
                   <CollectiblesIcon />
                 </StyledIcon>
                 Items
               </NavLink>
-              {/* <NavLink href={`/${account}`} scroll={false}>
-                <StyledIcon>
-                  <CollectionsIcon />
-                </StyledIcon>
-                Collected
-                <StyledNumber>0</StyledNumber>
-              </NavLink>
-              <Tippy
-                content={<CreatedDropdown />}
-                interactive
-                placement="bottom-start"
-                allowHTML
-                trigger="click"
-                arrow={false}
-                offset={[0, 0]}
-              >
-                <NavButtonLink
-                  as="button"
-                  className={isCreatedPage ? "active" : ""}
-                >
-                  <StyledIcon>
-                    <FolderIcon />
-                  </StyledIcon>
-                  Created
-                  <RightIcon>
-                    <ChevronDownIcon />
-                  </RightIcon>
-                </NavButtonLink>
-              </Tippy> */}
-              {/* <NavLink href={`/${account}/favourites`} scroll={false}>
-                <StyledIcon>
-                  <FavouriteIcon />
-                </StyledIcon>
-                Favourited
-                <StyledNumber>0</StyledNumber>
-              </NavLink> */}
-              {/* <NavLink href={`/${account}/activity`} scroll={false}>
-                <StyledIcon>
-                  <HistoryIcon />
-                </StyledIcon>
-                Activity
-                <StyledNumber>0</StyledNumber>
-              </NavLink> */}
-              {/* <Tippy
-                content={<OffersDropdown />}
-                interactive
-                placement="bottom-start"
-                allowHTML
-                trigger="click"
-                arrow={false}
-                offset={[0, 0]}
-              >
-                <NavButtonLink
-                  as="button"
-                  className={isBidPage ? "active" : ""}
-                >
-                  <StyledIcon>
-                    <OfferIcon />
-                  </StyledIcon>
-                  Offers
-                  <RightIcon>
-                    <ChevronDownIcon />
-                  </RightIcon>
-                </NavButtonLink>
-              </Tippy> */}
             </NavbarContainer>
           </ProfileNavbar>
         </ProfileNav>

@@ -1,6 +1,8 @@
 import { getAddress } from "@ethersproject/address";
+import axios from "axios";
 import { SupportedChainId } from "../constants/chains";
 import { EXPLORER_URLS } from "../constants/chain-info";
+import { SUBSCAN_API } from "../constants/subscan";
 import { MetaDataAtribute } from "../typings";
 
 export function isAddress(value: string): string | false {
@@ -82,3 +84,66 @@ export function getExplorerURL(
   }
   // return `${EXPLORER_URLS[chainId]}/${type}/${data}`;
 }
+
+interface GetContractDeployer {
+  address: string;
+  // block_num: number;
+  // contract_name: string;
+  // deploy_at: number;
+  deployer: string;
+  verify_status: string;
+}
+export const getContractDeployer = async (
+  chainId: number,
+  contractAddress: string
+) => {
+  const fetch = await axios.post(`${SUBSCAN_API[chainId]}/contracts`, {
+    contracts: [contractAddress],
+  });
+
+  if (!fetch.data) {
+    return null;
+  }
+
+  const data: GetContractDeployer = {
+    address: fetch.data.data[0].address,
+    deployer: fetch.data.data[0].deployer,
+    verify_status: fetch.data.data[0].verify_status,
+  };
+
+  return data;
+};
+
+export const slugify = (text: string, suffix?: number) => {
+  let slug = text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+
+  slug = suffix ? slug + "-" + suffix : slug;
+
+  return slug;
+};
+
+export const filterNull = (obj: any) => {
+  for (const key of Object.keys(obj)) {
+    if (!obj[key]) {
+      obj[key] = "";
+    }
+  }
+  return obj;
+};
+
+export const filterOutNull = (obj: any) => {
+  const result = {};
+  for (const key of Object.keys(obj)) {
+    if (obj[key]) {
+      result[key] = obj[key];
+    }
+  }
+  return result;
+};

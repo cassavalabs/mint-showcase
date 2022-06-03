@@ -30,7 +30,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
         />
         <meta
           name="description"
-          content="The best and user frendly multi blockchain NFT platform in the world."
+          content="The best and user friendly multi-blockchain NFT platform in the world."
         />
         <title>CassavaLand, multi blockchain NFT platform</title>
       </Head>

@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import styled from "styled-components";
 import { Page } from "@cassavaland/uikits";
+import type { Account } from "@cassavaland/sdk";
 import { ProfileHeader } from "../Headers/Profile";
 
 const PageContent = styled(Page)`
@@ -11,12 +12,14 @@ const PageContent = styled(Page)`
 
 export default function ProfileLayout({
   children,
+  account,
 }: {
   children: ReactElement;
+  account: Account;
 }) {
   return (
     <Page>
-      <ProfileHeader />
+      <ProfileHeader user={account} />
       <PageContent>{children}</PageContent>
     </Page>
   );

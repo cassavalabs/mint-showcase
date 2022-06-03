@@ -7,27 +7,15 @@ import {
   LightModeIcon,
   DarkModeIcon,
   CollectionsIcon,
-  PhotosIcon,
-  CollectiblesIcon,
   LogoutIcon,
-  ArtIcon,
-  MusicIcon,
-  AllIcon,
   LeftIcon,
-  GameIcon,
-  FavouriteIcon,
   SettingsIcon,
-  BlogIcon,
-  GithubIcon,
-  DocsIcon,
-  CommunityIcon,
-  ArrowDownLeftIcon,
-  ArrowUpRightIcon,
+  AddFolderIcon,
 } from "@cassavaland/uikits";
 import Link, { LinkProps } from "next/link";
 import { ReactElement } from "react";
 import { useDarkMode } from "../../contexts/theme";
-import { useRouter } from "next/router";
+import { useAuth } from "../../hooks/useAuth";
 
 const DropdownContainer = styled(FullWidth)`
   min-width: 13.75rem;
@@ -65,75 +53,9 @@ const DropdownItemLink = (props: StyledLinkProps) => {
   );
 };
 
-export const ExploreDropdown = ({ hide }: { hide: any }) => {
-  return (
-    <DropdownContainer>
-      <DropdownItem>
-        <DropdownItemLink href="/collections/all" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <AllIcon />
-            </LeftIcon>
-            All NFTs
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/collections/art" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <ArtIcon />
-            </LeftIcon>
-            Art
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/collections/photography" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <PhotosIcon />
-            </LeftIcon>
-            Photography
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/collections/games" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <GameIcon />
-            </LeftIcon>
-            Games
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/collections/music" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <MusicIcon />
-            </LeftIcon>
-            Music
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/collections/collectibles" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <CollectiblesIcon />
-            </LeftIcon>
-            Collectibles
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-    </DropdownContainer>
-  );
-};
-
 export const ProfileDropdown = ({ hide }: { hide: any }) => {
   const { darkMode, toggleDarkMode } = useDarkMode();
+  const { isconnected, logout } = useAuth();
 
   return (
     <DropdownContainer>
@@ -148,22 +70,22 @@ export const ProfileDropdown = ({ hide }: { hide: any }) => {
         </DropdownItemLink>
       </DropdownItem>
       <DropdownItem>
-        <DropdownItemLink href="/account/favourites" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <FavouriteIcon />
-            </LeftIcon>
-            Favourites
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
         <DropdownItemLink href="/account/collections-created" onClick={hide}>
           <>
             <LeftIcon size={1.5}>
               <CollectionsIcon />
             </LeftIcon>
             My Collections
+          </>
+        </DropdownItemLink>
+      </DropdownItem>
+      <DropdownItem>
+        <DropdownItemLink href="/account/collection/import" onClick={hide}>
+          <>
+            <LeftIcon size={1.5}>
+              <AddFolderIcon />
+            </LeftIcon>
+            Import Collection
           </>
         </DropdownItemLink>
       </DropdownItem>
@@ -177,14 +99,21 @@ export const ProfileDropdown = ({ hide }: { hide: any }) => {
           </>
         </DropdownItemLink>
       </DropdownItem>
-      <DropdownItem>
-        <DropdownButton onClick={hide}>
-          <LeftIcon size={1.5}>
-            <LogoutIcon />
-          </LeftIcon>
-          Logout
-        </DropdownButton>
-      </DropdownItem>
+      {isconnected && (
+        <DropdownItem>
+          <DropdownButton
+            onClick={() => {
+              logout();
+              hide();
+            }}
+          >
+            <LeftIcon size={1.5}>
+              <LogoutIcon />
+            </LeftIcon>
+            Logout
+          </DropdownButton>
+        </DropdownItem>
+      )}
       <DropdownItem>
         <DropdownButton onClick={() => toggleDarkMode()}>
           <LeftIcon size={1.5}>
@@ -192,116 +121,6 @@ export const ProfileDropdown = ({ hide }: { hide: any }) => {
           </LeftIcon>
           {darkMode ? "Light Mode" : "Dark Mode"}
         </DropdownButton>
-      </DropdownItem>
-    </DropdownContainer>
-  );
-};
-
-export const HelpDropdown = ({ hide }: { hide: any }) => {
-  return (
-    <DropdownContainer>
-      <DropdownItem>
-        <DropdownItemLink href="/blog" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <BlogIcon />
-            </LeftIcon>
-            Blog
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/community" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <CommunityIcon />
-            </LeftIcon>
-            Community
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/developers" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <DocsIcon />
-            </LeftIcon>
-            Developers
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href="/#" onClick={hide}>
-          <>
-            <LeftIcon size={1.5}>
-              <GithubIcon />
-            </LeftIcon>
-            Github
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-    </DropdownContainer>
-  );
-};
-
-export const OffersDropdown = () => {
-  const { query } = useRouter();
-  const { account } = query;
-
-  return (
-    <DropdownContainer>
-      <DropdownItem>
-        <DropdownItemLink href={`/${account}/bids`} scroll={false}>
-          <>
-            <LeftIcon size={1.5}>
-              <ArrowDownLeftIcon />
-            </LeftIcon>
-            Offers received
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink href={`/${account}/bids-made`} scroll={false}>
-          <>
-            <LeftIcon size={1.5}>
-              <ArrowUpRightIcon />
-            </LeftIcon>
-            Offers made
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-    </DropdownContainer>
-  );
-};
-
-export const CreatedDropdown = () => {
-  const { query } = useRouter();
-  const { account } = query;
-
-  return (
-    <DropdownContainer>
-      <DropdownItem>
-        <DropdownItemLink href={`/${account}/items-created`} scroll={false}>
-          <>
-            <LeftIcon size={1.5}>
-              <CollectiblesIcon />
-            </LeftIcon>
-            Items
-          </>
-        </DropdownItemLink>
-      </DropdownItem>
-      <DropdownItem>
-        <DropdownItemLink
-          href={`/${account}/collections-created`}
-          scroll={false}
-        >
-          <>
-            <LeftIcon size={1.5}>
-              <CollectionsIcon />
-            </LeftIcon>
-            Collections
-          </>
-        </DropdownItemLink>
       </DropdownItem>
     </DropdownContainer>
   );

@@ -21,6 +21,7 @@ import {
   MdEmail,
   MdAddCircle,
   MdModeEdit,
+  MdSend,
 } from "react-icons/md";
 import { RiInstagramFill } from "react-icons/ri";
 import { BiUserCircle, BiArrowBack, BiTransfer, BiLink } from "react-icons/bi";
@@ -57,12 +58,15 @@ import {
   FaTelegramPlane,
   FaShoppingCart,
   FaExternalLinkAlt,
+  FaRedoAlt,
+  FaShareAlt,
 } from "react-icons/fa";
 import {
   AiFillSetting,
   AiOutlineShareAlt,
   AiFillEdit,
   AiOutlineCloudUpload,
+  AiFillFolderAdd,
 } from "react-icons/ai";
 
 export {
@@ -127,4 +131,8 @@ export {
   BiLink as LinkIcon,
   MdAddCircle as AddCircleIcon,
   MdModeEdit as EditPencilIcon,
+  AiFillFolderAdd as AddFolderIcon,
+  FaRedoAlt as RedoIcon,
+  FaShareAlt as ShareIcon2,
+  MdSend as SendIcon,
 };

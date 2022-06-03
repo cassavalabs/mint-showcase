@@ -1,20 +1,10 @@
 import type { Types } from "mongoose";
 
-export interface CollectionCardProps {
-  creator: {
-    avatar: string;
-    name: string;
-    url: string;
-    verified: boolean;
-  };
-  collection: {
-    cover: string;
-    name: string;
-    url: string;
-    verified: boolean;
-    description: string;
-  };
-}
+export type CollectionCardProps = Omit<AssetCollection, "owner"> & {
+  owner: Account;
+  // created_at: string;
+  // updated_at: string;
+};
 
 export interface NFTCardProps {
   creator: {
@@ -39,10 +29,6 @@ export interface NFTCardProps {
     image: string;
     name: string;
     url: string;
-  };
-  likes: {
-    liked: boolean;
-    count: number;
   };
 }
 
@@ -86,6 +72,7 @@ export interface PinataResponse {
 
 export interface Account {
   address: string;
+  display_name?: string;
   username?: string;
   bio?: string;
   email?: string;
@@ -118,6 +105,7 @@ export interface AssetCollection {
   symbol: string;
   description?: string;
   external_link?: string;
+  contract_standard?: string;
   // social_contacts?: SocialContacts;
   facebook?: string;
   twitter?: string;
@@ -154,10 +142,11 @@ export interface Category {
 export interface AddCollectionPayload {
   blockchain: string;
   address: string;
-  name: string;
-  symbol: string;
+  name?: string;
+  symbol?: string;
   description?: string;
   external_link?: string;
+  contract_standard?: string;
   owner: string;
   slug: string;
 }
@@ -170,9 +159,12 @@ export interface SocialContacts {
   telegram?: string;
 }
 
-export interface ERC721NftContract {
-  id: string;
-  name: string;
-  symbol: string;
-  totalNfts: string;
+export interface UserERC721Nfts {
+  tokenId: string;
+  metadataURL: string;
+  nftContract: {
+    id: string;
+    name?: string;
+    symbol?: string;
+  };
 }
