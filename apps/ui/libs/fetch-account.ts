@@ -1,4 +1,5 @@
 // import type { Account } from "@cassavaland/sdk";
+import { isAddress } from "@cassavaland/sdk";
 import { AccountModel } from "../models";
 
 export const fetchAccount = async (userWallet: string, username: string) => {
@@ -17,9 +18,15 @@ export const fetchAccount = async (userWallet: string, username: string) => {
       }).save();
     }
   } else {
-    account = await accountModel
-      .findOne({ username: username.toLowerCase() })
-      .lean();
+    if (userWallet && isAddress(userWallet)) {
+      account = await accountModel
+        .findOne({ address: userWallet.toLowerCase() })
+        .lean();
+    } else {
+      account = await accountModel
+        .findOne({ username: username.toLowerCase() })
+        .lean();
+    }
   }
 
   if (account) {
