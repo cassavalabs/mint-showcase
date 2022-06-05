@@ -60,7 +60,7 @@ export const MediaCard = (props: MediaProps) => {
       </CardHeader>
       <CardBody>
         <MediaContainer>
-          <Image layout="fill" objectFit="cover" src={src} />
+          <Image layout="fill" objectFit="cover" src={src} unoptimized={true} />
         </MediaContainer>
       </CardBody>
     </BaseCard>

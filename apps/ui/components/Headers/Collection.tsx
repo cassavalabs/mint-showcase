@@ -15,7 +15,9 @@ import {
   media,
   Text,
   SocialLink,
+  GradientAvatar,
 } from "@cassavaland/uikits";
+import { CollectionCardProps, walletNameId } from "@cassavaland/sdk";
 import { useRouter } from "next/router";
 
 export const HeaderWrapper = styled(Container)`
@@ -104,37 +106,61 @@ export const CoverImage = styled(Image)`
   border-radius: 50%;
 `;
 
-export const CollectionHeader = () => {
-  const { query } = useRouter();
-  const { collection } = query;
+export const CollectionHeader = ({
+  collection,
+}: {
+  collection: CollectionCardProps;
+}) => {
+  const { owner, banner_image_uri, facebook, discord, telegram, twitter } =
+    collection;
 
   return (
     <HeaderWrapper>
       <Banner />
       <HeaderContainer>
-        <RoundAvatar
-          size={10.5}
-          src="/gorilla.jpg"
-          layout="fill"
-          alt="cassava"
-        />
+        {owner.avatar_uri ? (
+          <RoundAvatar
+            size={10.5}
+            src={owner.avatar_uri}
+            layout="fill"
+            alt={owner.display_name}
+          />
+        ) : (
+          <GradientAvatar seed={owner.address} size={168} />
+        )}
       </HeaderContainer>
       <Text color="text300">
-        Created by <ProfileLink href="#">Cassavaboy</ProfileLink>
+        Created by{" "}
+        <ProfileLink
+          href={`/${owner.username ? owner.username : owner.address}`}
+        >
+          {owner.display_name
+            ? owner.display_name
+            : walletNameId(owner.address)}
+        </ProfileLink>
       </Text>
       <Text size={2.5} weight={600} color="text300">
-        THE REBELS by House of Kalinkin
+        {collection.name}
       </Text>
       <SocialLinks>
-        <SocialLink href="#" text="@cassavaBoy" nature="facebook" />
-        <SocialLink href="twitter.com" text="@cassavaBoy" nature="twitter" />
-        <SocialLink href="discord.com" text="@cassavaBoy" nature="discord" />
+        {facebook && (
+          <SocialLink href={facebook} text={facebook} nature="facebook" />
+        )}
+        {twitter && (
+          <SocialLink href={twitter} text={twitter} nature="twitter" />
+        )}
+        {discord && (
+          <SocialLink href={discord} text={discord} nature="discord" />
+        )}
+        {telegram && (
+          <SocialLink href={telegram} text={telegram} nature="discord" />
+        )}
       </SocialLinks>
       <StatsRow>
         <StatsBox>
           <StatsBoxSubtitle>Items</StatsBoxSubtitle>
           <Text size={1.5} color="text300" weight={600}>
-            9.4K
+            {collection.total_supply}
           </Text>
         </StatsBox>
         <StatsBox>
@@ -144,15 +170,17 @@ export const CollectionHeader = () => {
           </Text>
         </StatsBox>
       </StatsRow>
-      <Text mWidth="37rem">
-        BAYC is a collection of 10,000 Bored Ape NFTs. Owning a Bored Ape
-        doubles as your membership href the Club.
-      </Text>
+      <Text mWidth="37rem">{collection.description}</Text>
       <Nav>
         <Navbar>
           <HorizontalDivider />
           <NavContainer>
-            <NavLink href={`/collection/${collection}`} scroll={false}>
+            <NavLink
+              href={`/collection/${collection.blockchain}/${
+                collection.slug ? collection.slug : collection.address
+              }`}
+              scroll={false}
+            >
               <StyledIcon>
                 <CollectionsIcon />
               </StyledIcon>

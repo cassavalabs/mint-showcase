@@ -1,8 +1,8 @@
-import { AssetCollection, isAddress } from "@cassavaland/sdk";
+import { CollectionCardProps, isAddress } from "@cassavaland/sdk";
 import { AssetCollectionModel, AccountModel } from "../models";
 
 export const fetchCollections = async (username?: string) => {
-  let collections: AssetCollection[];
+  let collections: CollectionCardProps[];
   const assetCollectionModel = await AssetCollectionModel();
   const accountModel = await AccountModel();
 
@@ -28,19 +28,25 @@ export const fetchCollections = async (username?: string) => {
   return collections;
 };
 
-export const fetchCollection = async (username: string) => {
-  let collection: AssetCollection;
+export const fetchCollection = async (username: string, blockchain: string) => {
+  const query: any = { blockchain: blockchain };
   const assetCollectionModel = await AssetCollectionModel();
 
   if (isAddress(username)) {
-    collection = await assetCollectionModel
-      .findOne({ address: username.toLowerCase() })
-      .lean();
+    query.address = username.toLowerCase();
   } else {
-    collection = await assetCollectionModel
-      .findOne({ slug: username.toLowerCase() })
-      .lean();
+    query.slug = username.toLowerCase();
   }
+
+  const accountModel = await AccountModel();
+  const collection: CollectionCardProps = await assetCollectionModel
+    .findOne(query, { _id: 0, __v: 0 })
+    .populate({
+      path: "owner",
+      select: "-_id -__v",
+      model: accountModel,
+    })
+    .lean();
 
   return collection;
 };

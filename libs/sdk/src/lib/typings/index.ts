@@ -13,6 +13,7 @@ export interface NFTCardProps {
   blockchain: string;
   owner: string;
   value: TokenMetaData;
+  totalNfts?: string;
 }
 
 export type MintFormCollection = {

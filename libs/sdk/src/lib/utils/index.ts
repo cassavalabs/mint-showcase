@@ -20,6 +20,16 @@ export function shortenAddress(address: string, chars = 4): string {
   return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`;
 }
 
+export function walletNameId(address: string): string {
+  const parsed = isAddress(address);
+
+  if (!parsed) {
+    return address;
+  }
+
+  return `${parsed.substring(2, 7).toUpperCase()}`;
+}
+
 export function validateDataMetaAttributes(attributes: MetaDataAtribute[]) {
   const result = attributes.filter((attribute) => {
     attribute.trait_type !== "" || attribute.value !== "";
@@ -42,7 +52,7 @@ export function decodeURI(uri: string) {
       const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
       return {
         protocol,
-        uri: `https://cloudflare-ipfs.com/ipfs/${hash}/`,
+        uri: `https://ipfs.io/ipfs/${hash}/`,
       };
     }
     case "ipns": {

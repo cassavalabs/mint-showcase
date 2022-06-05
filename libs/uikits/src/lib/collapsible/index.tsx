@@ -32,7 +32,7 @@ const CollapsibleChevron = styled.div<{ isOpen?: boolean }>`
 
 const CollapsibleBody = styled.div<{ isOpen?: boolean }>`
   background-color: ${({ theme }) => theme.bg100};
-  max-height: ${({ isOpen }) => (isOpen ? "20rem" : "0rem")};
+  max-height: ${({ isOpen }) => (isOpen ? "auto" : "0rem")};
   transition: max-height 0.4s linear;
 `;
 

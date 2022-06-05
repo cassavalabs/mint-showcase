@@ -69,7 +69,6 @@ export const NFTCard = (props: NFTCardProps) => {
     token_id,
     collection_name,
     collection_address,
-    owner,
   } = props;
 
   const assetUrl = `/assets/${blockchain}/${collection_address}/${token_id}`;
@@ -85,12 +84,13 @@ export const NFTCard = (props: NFTCardProps) => {
               title={token.name}
               layout="fill"
               objectFit="cover"
+              unoptimized={true}
             />
           </CardLink>
         </Link>
       </CardHeader>
       <CardBody>
-        <Link href={`/${owner}/collection/${collection_address}`} passHref>
+        <Link href={`/collection/${blockchain}/${collection_address}`} passHref>
           <CardSubTitle>{collection_name}</CardSubTitle>
         </Link>
         <Link href={assetUrl} passHref>

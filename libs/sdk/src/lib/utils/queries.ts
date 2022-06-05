@@ -93,13 +93,16 @@ export const getUserERC721Contract = async (
 
 export const getUserNftContract = async (
   chainId: number,
-  contractAddress: string
+  contractAddress: string,
+  withNfts?: boolean
 ) => {
   let res: {
     address: string;
     name?: string;
     symbol?: string;
     contract_standard: string;
+    totalNfts?: string;
+    nfts?: { tokenId: string; metadataURL: string; owner?: { id: string } }[];
   };
   const erc721 = await request(
     ALL_SUBGRAPH_URL[chainId],
@@ -109,6 +112,15 @@ export const getUserNftContract = async (
           id
           name
           symbol
+          totalNfts
+          ${
+            withNfts
+              ? `nfts {
+                  tokenId
+                  metadataURL
+                }`
+              : ""
+          }
         }
       }
     `,
@@ -120,7 +132,9 @@ export const getUserNftContract = async (
       address: erc721.erc721NftContract.id,
       name: erc721.erc721NftContract.name ?? "",
       symbol: erc721.erc721NftContract.symbol ?? "",
+      totalNfts: erc721.erc721NftContract.totalNfts,
       contract_standard: "ERC721",
+      nfts: erc721.erc721NftContract.nfts,
     };
 
     return res;
@@ -128,9 +142,18 @@ export const getUserNftContract = async (
     const erc1155 = await request(
       ALL_SUBGRAPH_URL[chainId],
       gql`
-        query getUserERC721Contract($contractAddress: ID!) {
+        query getUserERC1155Contract($contractAddress: ID!) {
           erc1155NftContract(id: $contractAddress) {
             id
+            totalNfts
+            ${
+              withNfts
+                ? `nfts {
+                  tokenId
+                  metadataURL
+                }`
+                : ""
+            }
           }
         }
       `,
@@ -141,9 +164,104 @@ export const getUserNftContract = async (
       address: erc1155.erc1155NftContract.id,
       name: "",
       symbol: "",
+      totalNfts: erc1155.erc1155NftContract.totalNfts,
       contract_standard: "ERC1155",
+      nfts: erc1155.erc1155NftContract.nfts,
     };
   }
 
   return res;
+};
+
+export const getCollectionNfts = async (
+  blockchain: string,
+  collectionAddress: string
+) => {
+  const chainId = parseInt(blockchain);
+  const data = await getUserNftContract(chainId, collectionAddress, true);
+
+  const decoded = await Promise.allSettled(
+    data.nfts.map((nft) => GetMetadata.decodeTokenURI(nft.metadataURL))
+  );
+
+  const metadata = [];
+
+  data.nfts.map((nft, index) => {
+    const { status, ...rest } = decoded[index];
+    if (status === "fulfilled") {
+      metadata.push({
+        token_id: nft.tokenId,
+        collection_address: data.address,
+        collection_name: data.name,
+        blockchain: chainId.toString(),
+        owner: nft.owner && nft.owner.id ? nft.owner.id : null,
+        totalNfts: data.totalNfts,
+        ...rest,
+      });
+    }
+  });
+
+  return metadata as NFTCardProps[];
+};
+
+export const getCollectionNft = async (
+  blockchain: string,
+  collectionAddress: string,
+  tokenId: string
+) => {
+  const chainId = parseInt(blockchain);
+  const id = `${collectionAddress}/0x${parseInt(tokenId, 16)}`;
+  let nftData: {
+    tokenId: string;
+    metadataURL: string;
+    nftContract: { totalNfts: string };
+  };
+
+  const erc721 = await request(
+    ALL_SUBGRAPH_URL[chainId],
+    gql`
+      query getCollectionNft($id: ID!) {
+        erc721Nft(id: $id) {
+          tokenId
+          metadataURL
+          nftContract {
+            totalNfts
+          }
+        }
+      }
+    `,
+    { id: id.toLowerCase() }
+  );
+
+  if (erc721.erc721Nft) {
+    nftData = erc721.erc721Nft;
+  } else {
+    const erc1155 = await request(
+      ALL_SUBGRAPH_URL[chainId],
+      gql`
+        query getCollectionNft($id: ID!) {
+          erc1155Nft(id: $id) {
+            tokenId
+            metadataURL
+            nftContract {
+              totalNfts
+            }
+          }
+        }
+      `,
+      { id: id.toLowerCase() }
+    );
+
+    nftData = erc1155.erc1155Nft;
+  }
+
+  const data = await GetMetadata.decodeTokenURI(nftData.metadataURL);
+
+  const metadata = {
+    token_id: tokenId,
+    collection_address: collectionAddress,
+    ...data,
+  };
+
+  return metadata;
 };

@@ -28,7 +28,6 @@ export default function Collections({
 }: {
   collections: AssetCollection[];
 }) {
-  console.log("collections loaded " + collections);
   return (
     <FlexColumn>
       <Header>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { rgba } from "polished";
 import Image from "next/image";
 import Link from "next/link";
-import type { CollectionCardProps } from "@cassavaland/sdk";
+import { CollectionCardProps, walletNameId } from "@cassavaland/sdk";
 import { FlexColumn, FlexCenter } from "../styles";
 import { RoundAvatar } from "../avatar";
 import { GradientAvatar } from "../identicon";
@@ -67,10 +67,18 @@ const Description = styled(Title)`
 `;
 
 export const CollectionCard = (props: CollectionCardProps) => {
-  const { owner, slug, address: collection_address, banner_image_uri } = props;
+  const {
+    owner,
+    slug,
+    address: collection_address,
+    banner_image_uri,
+    blockchain,
+  } = props;
 
   return (
-    <Link href={`/collection/${slug ? slug : collection_address}`}>
+    <Link
+      href={`/collection/${blockchain}/${slug ? slug : collection_address}`}
+    >
       <Card>
         <CardHeader>
           {banner_image_uri && (
@@ -106,7 +114,7 @@ export const CollectionCard = (props: CollectionCardProps) => {
               passHref
             >
               <ProfileLink>
-                {owner.username ? owner.username : "Halloboy"}
+                {owner.username ? owner.username : walletNameId(owner.address)}
               </ProfileLink>
             </Link>
           </Text>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
+import { AssetCollection } from "@cassavaland/sdk";
 import { FlexBetween, FlexColumn, Flex } from "../styles";
 import { RedoIcon, SendIcon, ShareIcon2 } from "../icons";
 import { IconButton } from "../button";
@@ -41,11 +42,17 @@ const Title = styled(Text)`
   margin-bottom: 1.5rem;
 `;
 
-export const AssetHeader = () => {
+export const AssetHeader = ({
+  collectionName,
+  assetName,
+}: {
+  collectionName: string;
+  assetName: string;
+}) => {
   return (
     <Container>
       <TopHeader>
-        <TextLink href="#">The Stone Heads.</TextLink>
+        <TextLink href="#">{collectionName}</TextLink>
         <Flex>
           <Tippy content="Refresh Metadata" theme="tooltip">
             <StyledButton>
@@ -64,9 +71,10 @@ export const AssetHeader = () => {
           </Tippy>
         </Flex>
       </TopHeader>
-      <Title>The Stone Heads #3528</Title>
+      <Title>{assetName}</Title>
       <Text textAlign="left">
-        Owned by <TextLink href="#">3QrGhJU</TextLink>
+        Owned by
+        {/* <TextLink href="#">3QrGhJU</TextLink> */}
       </Text>
     </Container>
   );

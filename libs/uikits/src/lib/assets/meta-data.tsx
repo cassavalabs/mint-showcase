@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { shortenAddress, getExplorerURL } from "@cassavaland/sdk";
+import {
+  shortenAddress,
+  getExplorerURL,
+  MetaDataAtribute,
+  AssetCollection,
+  CHAIN_INFO,
+} from "@cassavaland/sdk";
 import { FlexColumn, Flex, FlexBetween } from "../styles";
 import { Collapsible } from "../collapsible";
 import { Text } from "../text";
@@ -43,52 +49,55 @@ const TraitValue = styled(BaseText)`
   line-height: 2;
 `;
 
-interface TraitProps {
-  data: { trait_type: string; value: string };
-}
-
-export const Trait = () => {
-  // const { data } = props;
+export const Trait = (props: MetaDataAtribute) => {
+  const { trait_type, value } = props;
 
   return (
     <TraitContainer>
-      <TraitType>Background</TraitType>
-      <TraitValue>Red</TraitValue>
+      <TraitType>{trait_type}</TraitType>
+      <TraitValue>{value}</TraitValue>
     </TraitContainer>
   );
 };
 
-export const DisplayTraits = () => {
+export const DisplayTraits = ({ traits }: { traits?: MetaDataAtribute[] }) => {
   return (
     <Collapsible header="Properties">
       <FlexRow>
-        <Trait />
-        <Trait />
-        <Trait />
+        {traits?.map((trait, index) => {
+          return <Trait {...trait} key={index} />;
+        })}
       </FlexRow>
     </Collapsible>
   );
 };
 
-export const DisplayDescription = () => {
+export const DisplayDescription = ({
+  description,
+}: {
+  description: string;
+}) => {
   return (
     <Collapsible header="Description">
       <FlexRow>
-        <Text textAlign="left" color="text400" lineHeight={2}>
-          Created by <TextLink href="#">CassavaBoy</TextLink>
-        </Text>
-        <Text textAlign="left">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque illum
-          obcaecati excepturi voluptatibus, itaque saepe aliquid, ea provident
-          incidunt dolorum, accusamus a id porro? Velit doloribus odit
-          reiciendis numquam eaque.
-        </Text>
+        {/* <Text textAlign="left" color="text400" lineHeight={2}>
+          Created by <TextLink href="#">...</TextLink>
+        </Text> */}
+        <Text textAlign="left">{description}</Text>
       </FlexRow>
     </Collapsible>
   );
 };
 
-export const DisplayDetails = () => {
+export const DisplayDetails = ({
+  collection,
+  tokenId,
+}: {
+  collection: AssetCollection;
+  tokenId: string;
+}) => {
+  const chainInfo = CHAIN_INFO[parseInt(collection.blockchain)];
+
   return (
     <Collapsible header="Details">
       <FlexColumn>
@@ -97,12 +106,12 @@ export const DisplayDetails = () => {
           <StyledTextLink
             target="_blank"
             href={getExplorerURL(
-              1285,
-              "0x51685d226F643814EC3081593f0753CC8b2C38D1",
+              parseInt(collection.blockchain),
+              collection.address,
               "account"
             )}
           >
-            {shortenAddress("0x51685d226F643814EC3081593f0753CC8b2C38D1")}
+            {shortenAddress(collection.address)}
           </StyledTextLink>
         </Row>
         <Row>
@@ -110,21 +119,21 @@ export const DisplayDetails = () => {
           <StyledTextLink
             target="_blank"
             href={getExplorerURL(
-              1285,
-              "0x51685d226F643814EC3081593f0753CC8b2C38D1",
+              parseInt(collection.blockchain),
+              collection.address,
               "account"
             )}
           >
-            {shortenAddress("0x51685d226F643814EC3081593f0753CC8b2C38D1")}
+            {shortenAddress(collection.address)}
           </StyledTextLink>
         </Row>
         <Row>
           <Text>Token Standard</Text>
-          <Text weight={500}>ERC721</Text>
+          <Text weight={500}>{collection.contract_standard}</Text>
         </Row>
         <Row>
           <Text>Blockchain</Text>
-          <Text weight={500}>MoonRiver</Text>
+          <Text weight={500}>{chainInfo.chainName}</Text>
         </Row>
         <Row>
           <Text>Metadata</Text>

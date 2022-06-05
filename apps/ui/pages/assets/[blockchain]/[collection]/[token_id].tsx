@@ -1,3 +1,4 @@
+import { InferGetServerSidePropsType } from "next";
 import styled from "styled-components";
 import {
   Page,
@@ -9,6 +10,8 @@ import {
   DisplayDescription,
   DisplayDetails,
 } from "@cassavaland/uikits";
+import { withSessionSsr, getCollectionNft } from "@cassavaland/sdk";
+import { fetchCollection } from "../../../../libs/fetch-collections";
 
 const Row = styled(Flex)``;
 
@@ -26,22 +29,61 @@ const RightColumn = styled(FlexColumn)`
   margin: 1.5rem 1.5rem 1.5rem 0.8rem;
 `;
 
-export default function AssetPage() {
+export default function AssetPage({
+  collection,
+  nftMetadata,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Page>
       <Row>
         <LeftColumn>
-          <MediaCard src="/gorilla.jpg" blockchain="1285" />
-          <DisplayDescription />
-          <DisplayDetails />
+          <MediaCard
+            src={nftMetadata.image}
+            blockchain={collection.blockchain}
+          />
+          <DisplayDescription description={nftMetadata.description} />
+          <DisplayDetails
+            collection={collection}
+            tokenId={nftMetadata.token_id}
+          />
         </LeftColumn>
         <RightColumn>
-          <AssetHeader />
-          <DisplayTraits />
+          <AssetHeader
+            collectionName={collection.name}
+            assetName={nftMetadata.name}
+          />
+          <DisplayTraits traits={nftMetadata.attributes} />
         </RightColumn>
       </Row>
     </Page>
   );
 }
 
-// export const
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req, params }) {
+    const blockchainId = params.blockchain as string;
+    const collectionId = params.collection as string;
+    const tokenId = params.token_id as string;
+
+    const collection = await fetchCollection(collectionId, blockchainId);
+
+    if (!collection) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const nftMetadata = await getCollectionNft(
+      collection.blockchain,
+      collection.address,
+      tokenId
+    );
+
+    return {
+      props: {
+        collection: JSON.parse(JSON.stringify(collection)),
+        nftMetadata,
+      },
+    };
+  }
+);
