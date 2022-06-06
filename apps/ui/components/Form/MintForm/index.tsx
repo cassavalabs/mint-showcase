@@ -171,9 +171,7 @@ export const MintForm = (props: MintFormProps) => {
     <Form>
       <AssetUpload />
       <FormData isMultiple={isMultiple} />
-      <SubmitButton onClick={handleSubmit} disabled={validate()}>
-        Create
-      </SubmitButton>
+      <SubmitButton onClick={handleSubmit}>Create</SubmitButton>
     </Form>
   );
 };

@@ -62,7 +62,10 @@ export default function CreateCollection() {
   const { isCollectionModalOpen, toggleCollectionModal, toggleProgressModal } =
     useModal();
   const { chainId, account } = useActiveWeb3();
-  const setProgress = useProgressStore((state) => state.setProgress);
+  const [setProgress, updateProgress] = useProgressStore(
+    (state) => [state.setProgress, state.updateProgress],
+    shallow
+  );
   const contract = useNftFactoryContract();
 
   const [inputs, setInput] = useReducer(
@@ -97,9 +100,10 @@ export default function CreateCollection() {
       inputs.symbol,
       "ipfs://"
     );
+    updateProgress(0, 1);
     const receipt = await tx.wait();
     const event = receipt?.events?.find(
-      (event) => event.event === "ERC721CassavaCreated"
+      (event) => event.event === "ERC721CassavaCreated" 
     );
 
     if (event && event.args) {
@@ -139,7 +143,7 @@ export default function CreateCollection() {
       }
     }
 
-    toggleProgressModal();
+    dismiss();
     setProgress(null);
 
     Alert("Collection created Successfully", "success");

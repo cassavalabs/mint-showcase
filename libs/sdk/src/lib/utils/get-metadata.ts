@@ -131,6 +131,46 @@ const ERC721Abi = [
     name: "Transfer",
     type: "event",
   },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "from",
+        type: "address",
+      },
+      {
+        name: "to",
+        type: "address",
+      },
+      {
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "transferFrom",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "to",
+        type: "address",
+      },
+      {
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "transfer",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
 export class GetMetadata {
@@ -192,5 +232,11 @@ export class GetMetadata {
     const res: boolean = await this.contract.supportsInterface(interfaceId);
 
     return res;
+  }
+
+  async transferFrom(from: string, to: string, tokenId: string) {
+    const tx = await this.contract.transferFrom(from, to, tokenId);
+    console.log(tx);
+    return tx;
   }
 }

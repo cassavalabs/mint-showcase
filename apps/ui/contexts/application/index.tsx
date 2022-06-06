@@ -16,6 +16,7 @@ export enum ApplicationModal {
   CREATE_COLLECTION,
   CREATE_NFT_STATE,
   NFT_CREATED_SUCCESSFULLY,
+  TRANSFER_NFT,
 }
 
 const ApplicationContext = createContext<{

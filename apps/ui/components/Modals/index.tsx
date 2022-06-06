@@ -12,6 +12,10 @@ const ProgressModal = dynamic(() => import("./ProgressModal"), {
   ssr: false,
 });
 
+const TransferModal = dynamic(() => import("./TransferModal"), {
+  ssr: false,
+});
+
 const WalletModal = dynamic(() => import("./WalletModal"), {
   ssr: false,
 });
@@ -22,6 +26,7 @@ export default function ModalProvider() {
       <CreateCollectionModal />
       <NftCreatedModal />
       <ProgressModal />
+      <TransferModal />
       <WalletModal />
     </>
   );

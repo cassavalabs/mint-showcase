@@ -31,11 +31,15 @@ export function walletNameId(address: string): string {
 }
 
 export function validateDataMetaAttributes(attributes: MetaDataAtribute[]) {
-  const result = attributes.filter((attribute) => {
-    attribute.trait_type !== "" || attribute.value !== "";
+  const result = [];
+
+  attributes.map((attribute) => {
+    if (attribute.trait_type !== "" || attribute.value !== "") {
+      result.push(attribute);
+    }
   });
 
-  return result;
+  return result as MetaDataAtribute[];
 }
 
 export function decodeURI(uri: string) {
@@ -87,7 +91,7 @@ export function getExplorerURL(
       return `${EXPLORER_URLS[chainId]}/block/${data}`;
 
     case "tx":
-      return `${EXPLORER_URLS[chainId]}/extrinsic/${data}`;
+      return `${EXPLORER_URLS[chainId]}/tx/${data}`;
 
     default:
       return EXPLORER_URLS[chainId];

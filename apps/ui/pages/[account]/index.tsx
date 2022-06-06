@@ -6,6 +6,8 @@ import {
   getNftCardWidth,
   withSessionSsr,
   NFTCardProps,
+  getUserERC721Nfts,
+  ALL_SUPPORTED_CHAIN_IDS,
 } from "@cassavaland/sdk";
 import Layout from "../../components/Layouts/Profile";
 import { fetchAccount } from "../../libs/fetch-account";
@@ -18,7 +20,11 @@ export default function Collected({
 
   useEffect(() => {
     const fetchNfts = async () => {
-      const { data } = await axios.get(`/api/all/${user.address}/assets`);
+      const data = [];
+      ALL_SUPPORTED_CHAIN_IDS.map(async (blockchainId) => {
+        const data = await getUserERC721Nfts(user.address, blockchainId);
+        data.push(...data);
+      });
 
       if (data && data.length) {
         setUserNfts(data);

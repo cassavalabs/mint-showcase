@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import shallow from "zustand/shallow";
 import { InferGetServerSidePropsType } from "next";
 import styled from "styled-components";
 import {
@@ -9,9 +11,12 @@ import {
   DisplayTraits,
   DisplayDescription,
   DisplayDetails,
+  SpinLoader,
 } from "@cassavaland/uikits";
 import { withSessionSsr, getCollectionNft } from "@cassavaland/sdk";
 import { fetchCollection } from "../../../../libs/fetch-collections";
+import { useStore } from "../../../../state/mintForm";
+import { useModal, ApplicationModal } from "../../../../contexts/application";
 
 const Row = styled(Flex)``;
 
@@ -31,30 +36,61 @@ const RightColumn = styled(FlexColumn)`
 
 export default function AssetPage({
   collection,
-  nftMetadata,
+  tokenId,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [nftMetadata, setNftData] = useState<any>(null);
+  const { toggleActiveModal } = useModal();
+
+  const [setCollection, setTokenId] = useStore(
+    (state) => [state.setActiveCollection, state.setTokenId],
+    shallow
+  );
+
+  const transferHandler = () =>
+    toggleActiveModal(ApplicationModal.TRANSFER_NFT);
+
+  useEffect(() => {
+    const fetchNft = async () => {
+      const data = await getCollectionNft(
+        collection.blockchain,
+        collection.address,
+        tokenId
+      );
+      setNftData(data);
+      setCollection({ name: collection.name, address: collection.address });
+      setTokenId(tokenId);
+    };
+
+    fetchNft();
+  }, [collection, tokenId, setCollection, setTokenId]);
+
   return (
     <Page>
-      <Row>
-        <LeftColumn>
-          <MediaCard
-            src={nftMetadata.image}
-            blockchain={collection.blockchain}
-          />
-          <DisplayDescription description={nftMetadata.description} />
-          <DisplayDetails
-            collection={collection}
-            tokenId={nftMetadata.token_id}
-          />
-        </LeftColumn>
-        <RightColumn>
-          <AssetHeader
-            collectionName={collection.name}
-            assetName={nftMetadata.name}
-          />
-          <DisplayTraits traits={nftMetadata.attributes} />
-        </RightColumn>
-      </Row>
+      {nftMetadata ? (
+        <Row>
+          <LeftColumn>
+            <MediaCard
+              src={nftMetadata.image}
+              blockchain={collection.blockchain}
+            />
+            <DisplayDescription description={nftMetadata.description} />
+            <DisplayDetails
+              collection={collection}
+              tokenId={nftMetadata.token_id}
+            />
+          </LeftColumn>
+          <RightColumn>
+            <AssetHeader
+              collectionName={collection.name}
+              assetName={nftMetadata.name}
+              transferHandler={transferHandler}
+            />
+            <DisplayTraits traits={nftMetadata.attributes} />
+          </RightColumn>
+        </Row>
+      ) : (
+        <SpinLoader />
+      )}
     </Page>
   );
 }
@@ -73,16 +109,10 @@ export const getServerSideProps = withSessionSsr(
       };
     }
 
-    const nftMetadata = await getCollectionNft(
-      collection.blockchain,
-      collection.address,
-      tokenId
-    );
-
     return {
       props: {
         collection,
-        nftMetadata,
+        tokenId,
       },
     };
   }

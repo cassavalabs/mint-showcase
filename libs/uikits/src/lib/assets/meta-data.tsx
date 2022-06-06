@@ -62,7 +62,7 @@ export const Trait = (props: MetaDataAtribute) => {
 
 export const DisplayTraits = ({ traits }: { traits?: MetaDataAtribute[] }) => {
   return (
-    <Collapsible header="Properties">
+    <Collapsible header="Properties" isOpen>
       <FlexRow>
         {traits?.map((trait, index) => {
           return <Trait {...trait} key={index} />;
@@ -99,7 +99,7 @@ export const DisplayDetails = ({
   const chainInfo = CHAIN_INFO[parseInt(collection.blockchain)];
 
   return (
-    <Collapsible header="Details">
+    <Collapsible header="Details" isOpen>
       <FlexColumn>
         <Row>
           <Text>Contract Address</Text>

@@ -136,7 +136,7 @@ export default function NftCreatedModal() {
   const assetURL = `${window.location.host}/assets/${collection.address}/${tokenId}`;
 
   const handleViewNFT = () => {
-    router.push(`/assets/${collection.address}/${tokenId}`);
+    router.push(`/assets/${chainId}/${collection.address}/${tokenId}`);
   };
 
   const handleCreateAnother = () => {

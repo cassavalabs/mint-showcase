@@ -45,9 +45,11 @@ const Title = styled(Text)`
 export const AssetHeader = ({
   collectionName,
   assetName,
+  transferHandler,
 }: {
   collectionName: string;
   assetName: string;
+  transferHandler: () => void;
 }) => {
   return (
     <Container>
@@ -60,7 +62,7 @@ export const AssetHeader = ({
             </StyledButton>
           </Tippy>
           <Tippy content="Transfer NFT" theme="tooltip">
-            <StyledButton>
+            <StyledButton onClick={transferHandler}>
               <SendIcon />
             </StyledButton>
           </Tippy>
