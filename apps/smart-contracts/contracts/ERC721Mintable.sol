@@ -29,6 +29,8 @@ contract ERC721Mintable is ERC721Base {
         _safeMint(_msgSender(), tokenId);
         _setTokenCreator(tokenId, payable(_msgSender()));
         _setTokenURI(tokenId, tokenURI_);
+
+        emit Minted(_msgSender(), tokenId, tokenURI_);
     }
 
     function mintWithRoyalty(

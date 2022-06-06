@@ -9,6 +9,12 @@ contract ERC1155Cassava is ERC1155Base {
 
     event CreateERC1155Cassava(address owner, string name, string symbol);
 
+    event Minted(
+        address indexed creator,
+        uint256 indexed tokenId,
+        string indexed tokenURI
+    );
+
     constructor(
         string memory name,
         string memory symbol,
@@ -31,6 +37,8 @@ contract ERC1155Cassava is ERC1155Base {
         _mint(_msgSender(), tokenId, amount, "");
         _setTokenCreator(tokenId, payable(_msgSender()));
         _setTokenURI(tokenId, tokenURI_);
+
+        emit Minted(_msgSender(), tokenId, tokenURI_);
     }
 
     function mintWithRoyalty(
