@@ -12,7 +12,12 @@ export const useAuth = () => {
 
   const login = async (): Promise<void> => {
     try {
-      const signer = library.getSigner(account);
+      const web3library =
+        library && library.provider
+          ? library.provider
+          : (window as any).ethereum;
+          
+      const signer = web3library.getSigner(account);
 
       //Generate Nonce
       const {

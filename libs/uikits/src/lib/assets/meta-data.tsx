@@ -124,7 +124,7 @@ export const DisplayDetails = ({
               "account"
             )}
           >
-            {shortenAddress(collection.address)}
+            {tokenId}
           </StyledTextLink>
         </Row>
         <Row>
