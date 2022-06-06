@@ -10,6 +10,7 @@ import {
 import { CHAIN_INFO } from "@cassavaland/sdk";
 import { useActiveChainId } from "../../contexts/application";
 import { useStore } from "../../state/sidebar";
+import { useAuth } from "../../hooks/useAuth";
 
 const Container = styled(FlexColumn)`
   padding: 1.5rem;
@@ -34,11 +35,13 @@ const OptionButton = styled(SecondaryButton)`
 
 export const Authentication = () => {
   const { chainId: activeChainId, switchNetwork } = useActiveChainId();
+  const { login } = useAuth();
   const toggleSidebar = useStore((state) => state.toggleSidebar);
 
-  const handleChainSelection = (chainId: number) => {
+  const handleChainSelection = async (chainId: number) => {
     toggleSidebar(false);
     switchNetwork(chainId);
+    await login();
   };
 
   return (

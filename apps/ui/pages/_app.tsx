@@ -32,6 +32,8 @@ function CustomApp({ Component, pageProps }: AppProps) {
           name="description"
           content="The best and user friendly multi-blockchain NFT platform in the world."
         />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
         <title>CassavaLand, multi blockchain NFT platform</title>
       </Head>
       <LocaleProvider>
