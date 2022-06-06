@@ -81,7 +81,7 @@ export const getServerSideProps = withSessionSsr(
 
     return {
       props: {
-        collection: JSON.parse(JSON.stringify(collection)),
+        collection,
         nftMetadata,
       },
     };

@@ -7,20 +7,25 @@ export const fetchCollections = async (username?: string) => {
   const accountModel = await AccountModel();
 
   if (username && isAddress(username)) {
-    const account = await accountModel.findOne({ address: username });
+    const account = await accountModel.findOne({
+      address: username.toLowerCase(),
+    });
     collections = await assetCollectionModel
-      .find({ owner: account._id }, { _id: 0, __v: 0 })
+      .find(
+        { owner: account._id },
+        { _id: 0, __v: 0, created_at: 0, updated_at: 0 }
+      )
       .populate({
         path: "owner",
-        select: " -_id -__v",
+        select: " -_id -__v -updated_at -created_at",
       })
       .lean();
   } else {
     collections = await assetCollectionModel
-      .find({}, { _id: 0, __v: 0 })
+      .find({}, { _id: 0, __v: 0, created_at: 0, updated_at: 0 })
       .populate({
         path: "owner",
-        select: "-_id -__v",
+        select: "-_id -__v -updated_at -created_at",
       })
       .lean();
   }
@@ -40,10 +45,10 @@ export const fetchCollection = async (username: string, blockchain: string) => {
 
   const accountModel = await AccountModel();
   const collection: CollectionCardProps = await assetCollectionModel
-    .findOne(query, { _id: 0, __v: 0 })
+    .findOne(query, { _id: 0, __v: 0, created_at: 0, updated_at: 0 })
     .populate({
       path: "owner",
-      select: "-_id -__v",
+      select: "-_id -__v -updated_at -created_at",
       model: accountModel,
     })
     .lean();

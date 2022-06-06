@@ -10,7 +10,7 @@ import { AssetCollectionModel, AccountModel } from "../../../../models";
 
 const handler: NextApiHandler = async (req, res) => {
   const { method } = req;
-  const payload: { address: string } = req.body;
+  const payload: { address: string; description?: string } = req.body;
   let assetCollection: AssetCollection;
 
   if (method !== "POST") {
@@ -51,7 +51,11 @@ const handler: NextApiHandler = async (req, res) => {
             address: payload.address.toLowerCase(),
             owner: account._id,
           },
-          { ...contract, slug: slugify(contract.name ?? contract.address) },
+          {
+            ...contract,
+            slug: slugify(contract.name ?? contract.address),
+            description: payload.description,
+          },
           { upsert: true, new: true }
         );
       } else {

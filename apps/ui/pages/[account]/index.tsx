@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { InferGetServerSidePropsType } from "next";
 import axios from "axios";
 import { Grid, Text } from "@cassavaland/uikits";
 import {
@@ -9,7 +10,9 @@ import {
 import Layout from "../../components/Layouts/Profile";
 import { fetchAccount } from "../../libs/fetch-account";
 
-export default function Collected({ user }) {
+export default function Collected({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [userNfts, setUserNfts] = useState<NFTCardProps[] | null>(null);
 

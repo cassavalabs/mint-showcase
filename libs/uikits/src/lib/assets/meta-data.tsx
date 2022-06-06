@@ -3,7 +3,7 @@ import {
   shortenAddress,
   getExplorerURL,
   MetaDataAtribute,
-  AssetCollection,
+  CollectionCardProps,
   CHAIN_INFO,
 } from "@cassavaland/sdk";
 import { FlexColumn, Flex, FlexBetween } from "../styles";
@@ -93,7 +93,7 @@ export const DisplayDetails = ({
   collection,
   tokenId,
 }: {
-  collection: AssetCollection;
+  collection: CollectionCardProps;
   tokenId: string;
 }) => {
   const chainInfo = CHAIN_INFO[parseInt(collection.blockchain)];

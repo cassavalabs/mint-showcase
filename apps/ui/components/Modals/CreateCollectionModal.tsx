@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import shallow from "zustand/shallow";
 import { useReducer } from "react";
 import axios from "axios";
 import {
@@ -16,6 +17,7 @@ import { useModal } from "../../contexts/application";
 import { useNftFactoryContract } from "../../hooks/useContract";
 import { useActiveWeb3 } from "../../hooks/useWeb3";
 import { useProgressStore } from "../../state/progress";
+import { useStore } from "../../state/mintForm";
 
 const ModalContent = styled(Flex)`
   width: 100%;
@@ -71,6 +73,11 @@ export default function CreateCollection() {
     INITIAL_COLLECTION_STATE
   );
 
+  const [collections, setCollections] = useStore(
+    (state) => [state.collections, state.setCollections],
+    shallow
+  );
+
   const dismiss = () => {
     toggleCollectionModal();
   };
@@ -103,14 +110,33 @@ export default function CreateCollection() {
       console.log("Symbol " + symbol);
 
       //Index data to local db
-      await axios.post("", {
-        blockchain: chainId,
-        address: collectionAddress,
-        name: name,
-        symbol: symbol,
-        owner: creatorAddress,
-        description: inputs.description,
-      });
+      const data = await axios.post(
+        `/api/${chainId.toString()}/collection/save`,
+        {
+          address: collectionAddress,
+          owner: creatorAddress,
+          name,
+          symbol,
+          contract_standard: "ERC721",
+          description: inputs.description,
+        }
+      );
+
+      if (data.data && data.data.contract) {
+        setCollections([
+          ...collections,
+          {
+            address: data.data.contract.address,
+            name: data.data.contract.name,
+          },
+        ]);
+        Alert(
+          `${data.data.contract.standard} Imported successfully`,
+          "success"
+        );
+      } else {
+        Alert("Not Found!", "error");
+      }
     }
 
     toggleProgressModal();

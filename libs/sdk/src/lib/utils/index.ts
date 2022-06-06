@@ -81,7 +81,7 @@ export function getExplorerURL(
 ) {
   switch (type) {
     case "account":
-      return `${EXPLORER_URLS[chainId]}/account/${data}`;
+      return `${EXPLORER_URLS[chainId]}/address/${data}`;
 
     case "block":
       return `${EXPLORER_URLS[chainId]}/block/${data}`;

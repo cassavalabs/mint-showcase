@@ -18,9 +18,9 @@ export const fetchAccount = async (userWallet: string, username: string) => {
       }).save();
     }
   } else {
-    if (userWallet && isAddress(userWallet)) {
+    if (username && isAddress(username)) {
       account = await accountModel
-        .findOne({ address: userWallet.toLowerCase() })
+        .findOne({ address: username.toLowerCase() })
         .lean();
     } else {
       account = await accountModel

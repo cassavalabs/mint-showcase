@@ -103,7 +103,7 @@ export const getUserNftContract = async (
     contract_standard: string;
     totalNfts?: string;
     nfts?: { tokenId: string; metadataURL: string; owner?: { id: string } }[];
-  };
+  } | null = null;
   const erc721 = await request(
     ALL_SUBGRAPH_URL[chainId],
     gql`
@@ -160,14 +160,16 @@ export const getUserNftContract = async (
       { contractAddress: contractAddress.toLowerCase() }
     );
 
-    res = {
-      address: erc1155.erc1155NftContract.id,
-      name: "",
-      symbol: "",
-      totalNfts: erc1155.erc1155NftContract.totalNfts,
-      contract_standard: "ERC1155",
-      nfts: erc1155.erc1155NftContract.nfts,
-    };
+    if (erc1155.erc1155NftContract) {
+      res = {
+        address: erc1155.erc1155NftContract.id,
+        name: "",
+        symbol: "",
+        totalNfts: erc1155.erc1155NftContract.totalNfts,
+        contract_standard: "ERC1155",
+        nfts: erc1155.erc1155NftContract.nfts,
+      };
+    }
   }
 
   return res;
@@ -179,6 +181,10 @@ export const getCollectionNfts = async (
 ) => {
   const chainId = parseInt(blockchain);
   const data = await getUserNftContract(chainId, collectionAddress, true);
+
+  if (!data) {
+    return [];
+  }
 
   const decoded = await Promise.allSettled(
     data.nfts.map((nft) => GetMetadata.decodeTokenURI(nft.metadataURL))

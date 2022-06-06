@@ -18,7 +18,14 @@ const handler: NextApiHandler = async (req, res) => {
     const assetCollectionModel = await AssetCollectionModel();
     const accountModel = await AccountModel();
 
-    const account = await accountModel.findOne({ address: username });
+    const account = await accountModel.findOne({
+      address: username.toLowerCase(),
+    });
+
+    if (!account) {
+      res.status(404).send({ error: "Account not found!" });
+    }
+
     collections = await assetCollectionModel
       .find({ owner: account._id }, { _id: 0, __v: 0 })
       .populate({
