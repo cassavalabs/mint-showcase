@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { LOGIN_MESSAGE, Web3Auth } from "@cassavaland/sdk";
 import { Alert } from "@cassavaland/uikits";
@@ -11,13 +12,11 @@ export const useAuth = () => {
   const isconnected = !!account;
 
   const login = async (): Promise<void> => {
+    console.log("active account " + account);
     try {
-      const web3library =
-        library && library.provider
-          ? library.provider
-          : (window as any).ethereum;
-          
-      const signer = web3library.getSigner(account);
+      const signer = new ethers.providers.Web3Provider(
+        (window as any).ethereum
+      ).getSigner();
 
       //Generate Nonce
       const {

@@ -13,6 +13,7 @@ import { Text } from "../text";
 import { PrimaryButton } from "../button";
 import { InfoIcon } from "../icons";
 import media from "../theme/media";
+import { GradientAvatar } from "../identicon";
 
 const Wrapper = styled(FlexCenter)`
   position: relative;
@@ -179,30 +180,40 @@ export const HomeHero = () => {
         <Column>
           <FeaturedCard>
             <FeaturedImage>
-              <Link href="/collection" passHref>
+              <Link
+                href="/assets/1287/0x2aa213d093cb0c0f7d3a5aceaf3bcff3c1d8f6a0/1"
+                passHref
+              >
                 <StyledLink>
                   <Image src="/gorilla.jpg" layout="fill" objectFit="cover" />
                 </StyledLink>
               </Link>
             </FeaturedImage>
             <FeaturedProfile>
-              <Link href="/profile" passHref>
-                <StyledLink>
-                  <ProfileImage
+              <Link href="/cassavaboy" passHref>
+                <StyledLink style={{ overflow: "unset" }}>
+                  {/* <ProfileImage
                     width={48}
                     height={48}
                     src="/gorilla.jpg"
                     alt="featured"
+                  /> */}
+                  <GradientAvatar
+                    seed="0x51685d226F643814EC3081593f0753CC8b2C38D1"
+                    size={48}
                   />
                 </StyledLink>
               </Link>
               <FlexBetween full>
                 <ProfileDetails>
-                  <Link href="/collection" passHref>
+                  <Link
+                    href="/assets/1287/0x2aa213d093cb0c0f7d3a5aceaf3bcff3c1d8f6a0/1"
+                    passHref
+                  >
                     <StyledLink>Gorilla#38</StyledLink>
                   </Link>
-                  <Link href="/profile" passHref>
-                    <ProfileLink>CassavaBoy</ProfileLink>
+                  <Link href="/cassavaboy" passHref>
+                    <ProfileLink>The hankees</ProfileLink>
                   </Link>
                 </ProfileDetails>
                 <InfoIcon size={24} />
