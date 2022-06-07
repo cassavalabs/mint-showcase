@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ethers } from "ethers";
+// import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { LOGIN_MESSAGE, Web3Auth } from "@cassavaland/sdk";
 import { Alert } from "@cassavaland/uikits";
@@ -12,43 +12,42 @@ export const useAuth = () => {
   const isconnected = !!account;
 
   const login = async (): Promise<void> => {
-    console.log("active account " + account);
     try {
-      const signer = new ethers.providers.Web3Provider(
-        (window as any).ethereum
-      ).getSigner();
+      if (!!account && !!library) {
+        const signer = library.getSigner();
 
-      //Generate Nonce
-      const {
-        data: { nonce },
-      } = await axios.get<{ nonce: string }>("/api/auth/nonce");
+        //Generate Nonce
+        const {
+          data: { nonce },
+        } = await axios.get<{ nonce: string }>("/api/auth/nonce");
 
-      //Generate Message
-      const web3Auth = new Web3Auth({
-        nonce,
-        message: LOGIN_MESSAGE,
-        account,
-      });
+        //Generate Message
+        const web3Auth = new Web3Auth({
+          nonce,
+          message: LOGIN_MESSAGE,
+          account,
+        });
 
-      //Request for user signature
-      const signature = await web3Auth.signMessage(signer);
+        //Request for user signature
+        const signature = await web3Auth.signMessage(signer);
 
-      //Verify Signature
-      const {
-        data: { verified },
-      } = await axios.post<{ verified: boolean }>("/api/auth/verify", {
-        message: web3Auth.formatMessage(),
-        signature,
-      });
+        //Verify Signature
+        const {
+          data: { verified },
+        } = await axios.post<{ verified: boolean }>("/api/auth/verify", {
+          message: web3Auth.formatMessage(),
+          signature,
+        });
 
-      if (!verified) {
-        Alert(
-          "Sorry we could not authenticate your identity, try again later",
-          "error"
-        );
-      } else {
-        Alert("Login successful", "success");
-        router.push("/account");
+        if (!verified) {
+          Alert(
+            "Sorry we could not authenticate your identity, try again later",
+            "error"
+          );
+        } else {
+          Alert("Login successful", "success");
+          router.push("/account");
+        }
       }
     } catch (error) {
       console.log(error);

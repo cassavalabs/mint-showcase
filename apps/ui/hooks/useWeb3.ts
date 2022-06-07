@@ -78,8 +78,7 @@ export function useInactiveListener(suppress = false) {
 
 export function useActiveWeb3() {
   const interfaceContext = useWeb3React<Web3Provider>();
-  // const interfaceNetworkContext =
-  // useWeb3React<Web3Provider>(NETWORK_CONTEXT_NAME);
+  // const interfaceNetworkContext = useWeb3React<Web3Provider>("NETWORK");
 
   // if (interfaceContext.active) {
   return interfaceContext;

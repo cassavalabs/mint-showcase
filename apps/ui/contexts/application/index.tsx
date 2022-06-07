@@ -88,19 +88,14 @@ export const ApplicationProvider = ({ children }: { children: ReactNode }) => {
   // Switch MetaMask Network
   const switchNetwork = useCallback(
     async (targetChainId: number) => {
-      const web3library =
-        library && library.provider
-          ? library.provider
-          : (window as any).ethereum;
-
-      if (!web3library.request) {
+      if (!library) {
         toggleActiveModal(ApplicationModal.WALLET);
       }
 
       const chainIdHex = `0x${targetChainId.toString(16)}`;
 
       try {
-        await web3library.request({
+        await library.provider.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: chainIdHex }],
         });
