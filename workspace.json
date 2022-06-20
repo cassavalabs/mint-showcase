@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "projects": {
+    "smart-contracts": "apps/smart-contracts",
+    "subgraphs": "apps/subgraphs",
+    "sdk": "libs/sdk",
+    "ui": "apps/ui",
+    "uikits": "libs/uikits"
+  }
+}

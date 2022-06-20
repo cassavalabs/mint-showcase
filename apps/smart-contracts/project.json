@@ -1,0 +1,73 @@
+{
+  "root": "apps/smart-contracts",
+  "sourceRoot": "apps/smart-contracts",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "libs/sdk/lib/abi",
+        "commands": [{
+          "command": "hardhat compile"
+        }],
+        "cwd": "apps/smart-contracts"
+      }
+    },
+    "node": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "hardhat node"
+        }],
+        "cwd": "apps/smart-contracts"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "solhint 'contracts/**/*.sol'"
+        ],
+        "cwd": "apps/smart-contracts"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "hardhat test"
+        }],
+        "cwd": "apps/smart-contracts"
+      }
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "hardhat deploy --network {args.network}"
+        }],
+        "cwd": "apps/smart-contracts"
+      }
+    },
+    "lint:sol": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "solhint 'contracts/**/*.sol'"
+        }],
+        "cwd": "apps/smart-contracts"
+      }
+    },
+    "format": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [{
+          "command": "prettier 'contracts/**/*.sol' -w"
+        }],
+        "cwd": "apps/smart-contracts"
+      }
+    }
+  },
+  "tags": []
+}

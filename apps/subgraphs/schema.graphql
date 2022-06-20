@@ -1,0 +1,149 @@
+type AllNft @entity {
+  id: ID!
+
+  "Total number of ERC721 Contracts created on this blockchain"
+  totalERC721NftContracts: BigInt!
+
+  "Total number of ERC1155 Contracts created on this blockchain"
+  totalERC1155NftContracts: BigInt!
+
+  "Total ERC721 Nft tokens created on this blockchain"
+  totalERC721TokensCreated: BigInt!
+
+  "Total ERC1155 Nft tokens created on this blockchain"
+  totalERC1155TokensCreated: BigInt!
+
+  "Total number of ERC721 token holders currently active on this blockchain"
+  totalERC721Holders: BigInt!
+
+  "Total number of ERC1155 token holders currently active on this blockchain"
+  totalERC1155Holders: BigInt!
+}
+
+type Account @entity {
+  "Address of the owner"
+  id: ID!
+
+  "A default detection account to differentiate token standards"
+  asERC721: ERC721NftContract
+
+  asERC1155: ERC1155NftContract
+
+  "All ERC721 nfts owned by this user wallet"
+  erc721nfts: [ERC721Nft!]! @derivedFrom(field: "owner")
+
+  "All ERC1155 nfts owned by this user wallet"
+  erc1155Balances: [ERC1155Balance!]! @derivedFrom(field: "account")
+}
+
+type ERC721Nft @entity {
+  "tokenContractAddress-tokenId"
+  id: ID!
+
+  "The collection contract that hosts this nft token"
+  nftContract: ERC721NftContract!
+
+  "The unique token Id of this Nft"
+  tokenId: BigInt!
+
+  "The owner of this Nft"
+  owner: Account!
+
+  "Timestamp this Nft was minted on the blockchain"
+  dateMinted: BigInt
+
+  "The link where metadata of this Nft is stored"
+  metadataURL: String
+}
+
+type ERC1155Nft @entity {
+  id: ID!
+
+  "The Collection contract that hosts this token"
+  nftContract: ERC1155NftContract!
+
+  "The unique tokenId of this nft token"
+  tokenId: BigInt!
+
+  "A map of owners and balances"
+  balances: [ERC1155Balance!]! @derivedFrom(field: "nft")
+
+  "Token total supply"
+  totalSupply: ERC1155Balance!
+
+  "The link to the metadata of this nft"
+  metadataURL: String
+
+  "Date minted"
+  dateMinted: BigInt
+}
+
+type ERC721NftContract @entity {
+  "Address of the Nft contract"
+  id: ID!
+
+  "Used for loading ERC721 tokens only"
+  asAccount: Account!
+
+  "The Name of this Nft collection"
+  name: String
+
+  "The Symbol of this Nft collection"
+  symbol: String
+
+  "True if this Nft contract supports the EIP721Metadata interface"
+  supportsMetadata: Boolean
+
+  "True if this Nft contract supports EIP2981 royalty standard"
+  supportsERC2981: Boolean
+
+  "Total number of nfts contained in this collection"
+  totalNfts: BigInt!
+
+  "Total number of users that own a piece of this collection"
+  totalOwners: BigInt!
+
+  "Nfts minted in this collection"
+  nfts: [ERC721Nft!]! @derivedFrom(field: "nftContract")
+}
+
+type ERC1155NftContract @entity {
+  "contract address"
+  id: ID!
+
+  asAccount: Account!
+
+  "True if this Nft contract supports EIP2981 royalty standard"
+  supportsERC2981: Boolean
+
+  "Total number of nfts contained in this collection"
+  totalNfts: BigInt
+
+  "Total number of users that own a piece of this collection"
+  totalOwners: BigInt
+
+  "All nft tokens hosted in this collection"
+  nfts: [ERC1155Nft!]! @derivedFrom(field: "nftContract")
+
+  "A map of token balances"
+  balances: [ERC1155Balance!]! @derivedFrom(field: "nftContract")
+}
+
+type ERC1155Balance @entity {
+  id: ID!
+
+  "The collection nft contract"
+  nftContract: ERC1155NftContract!
+
+  "Nft attached to this balance"
+  nft: ERC1155Nft!
+
+  "An account that owns the balance"
+  account: Account
+
+  "The token balance of the above account"
+  value: BigDecimal!
+
+  "The exact value"
+  valueExact: BigInt!
+}
