@@ -91,7 +91,7 @@ export const CollectionCard = (props: CollectionCardProps) => {
           )}
         </CardHeader>
         <PushUp>
-          {owner.avatar_uri ? (
+          {owner && owner.avatar_uri ? (
             <RoundAvatar
               size={4}
               src={owner.avatar_uri}
@@ -107,17 +107,21 @@ export const CollectionCard = (props: CollectionCardProps) => {
           <Title>{props.name}</Title>
         </GroupTitle>
         <FlexCenter>
-          <Text size={0.875}>
-            By{" "}
-            <Link
-              href={`/${owner.username ? owner.username : owner.address}`}
-              passHref
-            >
-              <ProfileLink>
-                {owner.username ? owner.username : walletNameId(owner.address)}
-              </ProfileLink>
-            </Link>
-          </Text>
+          {owner && (
+            <Text size={0.875}>
+              By{" "}
+              <Link
+                href={`/${owner.username ? owner.username : owner.address}`}
+                passHref
+              >
+                <ProfileLink>
+                  {owner.username
+                    ? owner.username
+                    : walletNameId(owner.address)}
+                </ProfileLink>
+              </Link>
+            </Text>
+          )}
         </FlexCenter>
         <Description>
           <span>{props.description}</span>

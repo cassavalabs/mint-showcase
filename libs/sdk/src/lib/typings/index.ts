@@ -1,7 +1,7 @@
 import type { Types } from "mongoose";
 
 export type CollectionCardProps = Omit<AssetCollection, "owner"> & {
-  owner: Account;
+  owner?: Account;
   // created_at: string;
   // updated_at: string;
 };
@@ -99,7 +99,7 @@ export interface AssetCollection {
   slug: string;
   total_supply?: string;
   banner_image_uri?: string;
-  owner: Types.ObjectId;
+  owner?: Types.ObjectId;
   // category: Types.ObjectId;
   verified?: boolean;
 }

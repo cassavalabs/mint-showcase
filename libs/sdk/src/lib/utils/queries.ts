@@ -148,7 +148,7 @@ export const getUserNftContract = async (
             totalNfts
             ${
               withNfts
-                ? `nfts {
+                ? `nfts(first: 100) {
                   tokenId
                   metadataURL
                 }`
@@ -171,6 +171,8 @@ export const getUserNftContract = async (
       };
     }
   }
+
+  console.log(res);
 
   return res;
 };

@@ -25,23 +25,28 @@ const handler: NextApiHandler = async (req, res) => {
       payload.address
     );
 
-    if (contractDeployer) {
+    // if (contractDeployer) {
+    if (payload) {
       const contract = await getUserNftContract(
         parseInt(chainId),
-        contractDeployer.address
+        payload.address
       );
 
       if (contract && contract.address) {
         const accountModel = await AccountModel();
-        let account = await accountModel
-          .findOne({ address: contractDeployer.deployer.toLowerCase() })
-          .exec();
+        let account: any;
 
-        if (!account) {
-          account = await new accountModel({
-            address: contractDeployer.deployer.toLowerCase(),
-            verified: false,
-          }).save();
+        if (contractDeployer) {
+          account = await accountModel
+            .findOne({ address: contractDeployer.deployer.toLowerCase() })
+            .exec();
+
+          if (!account) {
+            account = await new accountModel({
+              address: contractDeployer.deployer.toLowerCase(),
+              verified: false,
+            }).save();
+          }
         }
 
         const assetCollectionModel = await AssetCollectionModel();
@@ -49,7 +54,7 @@ const handler: NextApiHandler = async (req, res) => {
           {
             blockchain: chainId,
             address: payload.address.toLowerCase(),
-            owner: account._id,
+            owner: account ? account._id : null,
           },
           {
             ...contract,
