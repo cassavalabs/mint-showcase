@@ -48,6 +48,7 @@ CassavaLand is a platform that allows users to create, explore and sell extra-or
 
 We are currently indexing all NFTs on moonbeam, moon base alpha and moon river network.
 
+<<<<<<< HEAD
 | Network             | Endpoint                                                                   |
 | ------------------- | -------------------------------------------------------------------------- |
 | Moon base alpha     | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonbase  |
@@ -56,6 +57,13 @@ We are currently indexing all NFTs on moonbeam, moon base alpha and moon river n
 | Binance Smart Chain | https://api.thegraph.com/subgraphs/name/iphyman/rare-cassava               |
 | Ethereum Mainnet    | https://api.thegraph.com/subgraphs/name/amxx/eip721-subgraph               |
 | Boba Network        | https://api.thegraph.com/subgraphs/name/iphyman/cassavaland-boba           |
+=======
+| Network         | Endpoint                                                                   |
+| --------------- | -------------------------------------------------------------------------- |
+| Moon base alpha | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonbase  |
+| Moonbeam        | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonbeam  |
+| Moon river      | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonriver |
+>>>>>>> 5e7112d42a6c848a8cbadaae1d686f74d53ea8d9
 
 ### Built With
 
@@ -97,9 +105,12 @@ nx serve ui --dev
 - [x] Minting
 - [x] Showcase
 - [ ] Marketplace
+<<<<<<< HEAD
   - [ ] Auction
   - [ ] Buy Now
   - [ ] Offer
+=======
+>>>>>>> 5e7112d42a6c848a8cbadaae1d686f74d53ea8d9
 
 ## Contributing
 

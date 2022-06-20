@@ -6,7 +6,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: ERC721
+<<<<<<< HEAD
     network: boba
+=======
+    network: moonriver
+>>>>>>> 5e7112d42a6c848a8cbadaae1d686f74d53ea8d9
     source:
       abi: ERC721
       startBlock: 1
@@ -26,7 +30,11 @@ dataSources:
   #ERC1155
   - kind: ethereum
     name: ERC1155
+<<<<<<< HEAD
     network: boba
+=======
+    network: moonriver
+>>>>>>> 5e7112d42a6c848a8cbadaae1d686f74d53ea8d9
     source:
       abi: ERC1155
       startBlock: 1

@@ -14,6 +14,7 @@ export interface BaseChainInfo {
 }
 
 export const CHAIN_INFO: { [chainId: number]: BaseChainInfo } = {
+<<<<<<< HEAD
   [SupportedChainId.BINANCE_CHAIN]: {
     blockExplorerUrls: ["https://bscscan.com"],
     chainName: "Smart Chain",
@@ -35,6 +36,8 @@ export const CHAIN_INFO: { [chainId: number]: BaseChainInfo } = {
     rpcUrls: ["https://rpc.ankr.com/eth"],
     nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
   },
+=======
+>>>>>>> 5e7112d42a6c848a8cbadaae1d686f74d53ea8d9
   [SupportedChainId.MOONBEAM]: {
     blockExplorerUrls: ["https://moonscan.io"],
     chainName: "Moonbeam",
