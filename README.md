@@ -44,9 +44,11 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
+<div style="padding:48.02% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/717736971?h=0dde70ebd8&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="New Recording - 6/7/2022, 3:42:35 AM"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
 CassavaLand is a platform that allows users to create, explore and sell extra-ordinary NFTs across multiple blockchains. The platform allows users to import their existing NFT collection, customize their profile and share to friends on social media.
 
-We are currently indexing all NFTs on moonbeam, moon base alpha and moon river network.
+We are currently indexing all NFTs on Binance chain, Boba network, moonbeam, moon base alpha and moon river network.
 
 | Network             | Endpoint                                                                   |
 | ------------------- | -------------------------------------------------------------------------- |
@@ -54,8 +56,7 @@ We are currently indexing all NFTs on moonbeam, moon base alpha and moon river n
 | Moonbeam            | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonbeam  |
 | Moon river          | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonriver |
 | Binance Smart Chain | https://api.thegraph.com/subgraphs/name/iphyman/rare-cassava               |
-
-| Boba Network | https://api.thegraph.com/subgraphs/name/iphyman/cassavaland-boba |
+| Boba Network        | https://api.thegraph.com/subgraphs/name/iphyman/cassavaland-boba           |
 
 ### Built With
 

@@ -217,6 +217,7 @@ export interface ERC1155MintableInterface extends utils.Interface {
     "BaseURIUpdated(string)": EventFragment;
     "CreateERC1155Cassava(address,string,string)": EventFragment;
     "DefaultApproval(address,bool)": EventFragment;
+    "Minted(address,uint256,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "SetTokenCreator(uint256,address,address)": EventFragment;
     "SetTokenRoyalty(uint256,address,uint96)": EventFragment;
@@ -229,6 +230,7 @@ export interface ERC1155MintableInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "BaseURIUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CreateERC1155Cassava"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DefaultApproval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetTokenCreator"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetTokenRoyalty"): EventFragment;
@@ -282,6 +284,18 @@ export type DefaultApprovalEvent = TypedEvent<
 >;
 
 export type DefaultApprovalEventFilter = TypedEventFilter<DefaultApprovalEvent>;
+
+export interface MintedEventObject {
+  creator: string;
+  tokenId: BigNumber;
+  tokenURI: string;
+}
+export type MintedEvent = TypedEvent<
+  [string, BigNumber, string],
+  MintedEventObject
+>;
+
+export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -759,6 +773,17 @@ export interface ERC1155Mintable extends BaseContract {
       operator?: string | null,
       isAuthorized?: null
     ): DefaultApprovalEventFilter;
+
+    "Minted(address,uint256,string)"(
+      creator?: string | null,
+      tokenId?: BigNumberish | null,
+      tokenURI?: string | null
+    ): MintedEventFilter;
+    Minted(
+      creator?: string | null,
+      tokenId?: BigNumberish | null,
+      tokenURI?: string | null
+    ): MintedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,

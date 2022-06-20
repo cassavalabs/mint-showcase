@@ -6,6 +6,8 @@ import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 
 const chainIds = {
+  binance: 56,
+  boba: 288,
   hardhat: 31337,
   moonbeam: 1284,
   moonbase: 1287,
@@ -29,6 +31,8 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
+    binance: createConfig("binance"),
+    boba: createConfig("boba"),
     moonbeam: createConfig("moonbeam"),
     moonbase: createConfig("moonbase"),
     moonriver: createConfig("moonriver"),
