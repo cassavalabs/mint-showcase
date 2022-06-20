@@ -9,14 +9,15 @@
     <img src="apps/ui/public/logo_white.png" alt="Logo" width="auto" height="90">
   </a>
   <p align="center">
-    An opensource dApp to mint and showcase NFT on MoonRiver, MoonBeam and MoonBase blockchain
+    An opensource dApp to mint and showcase NFT on Binance smart chain, Boba network, MoonRiver, MoonBeam and MoonBase blockchain
     <br />
-    <a href="https://cassavaland.io">View Demo</a>
+    <a href="https://cassavaland.io">Live Demo dApp</a> |
+    <a href="https://vimeo.com/717736971/0dde70ebd8">Demo video</a>
   </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<details>
+<details open>
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -43,8 +44,6 @@
 ## About The Project
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-
-<div style="padding:48.02% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/717736971?h=0dde70ebd8&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="New Recording - 6/7/2022, 3:42:35 AM"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
 
 CassavaLand is a platform that allows users to create, explore and sell extra-ordinary NFTs across multiple blockchains. The platform allows users to import their existing NFT collection, customize their profile and share to friends on social media.
 
