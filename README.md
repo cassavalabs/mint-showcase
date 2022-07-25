@@ -9,7 +9,7 @@
     <img src="apps/ui/public/logo_white.png" alt="Logo" width="auto" height="90">
   </a>
   <p align="center">
-    An opensource dApp to mint and showcase NFT on Binance smart chain, Boba network, MoonRiver, MoonBeam and MoonBase blockchain
+    An opensource dApp to mint and showcase NFT on Bittorrent, Binance smart chain, Boba network, MoonRiver, MoonBeam and MoonBase blockchain
     <br />
     <a href="https://cassavaland.io">Live Demo dApp</a> |
     <a href="https://vimeo.com/717736971/0dde70ebd8">Demo video</a>
