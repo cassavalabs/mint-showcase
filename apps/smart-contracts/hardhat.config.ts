@@ -7,6 +7,7 @@ import "hardhat-deploy-ethers";
 
 const chainIds = {
   binance: 56,
+  bittorrent: 1029,
   boba: 288,
   hardhat: 31337,
   moonbeam: 1284,
@@ -32,6 +33,7 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {},
     binance: createConfig("binance"),
+    bittorrent: createConfig("bittorrent"),
     boba: createConfig("boba"),
     moonbeam: createConfig("moonbeam"),
     moonbase: createConfig("moonbase"),

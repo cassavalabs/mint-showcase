@@ -21,6 +21,7 @@ import {
   useERC721CassavaContract,
   useERC1155CassavaContract,
 } from "../../../hooks/useContract";
+import axios from "axios";
 
 interface MintFormProps {
   isMultiple?: boolean;
@@ -160,6 +161,14 @@ export const MintForm = (props: MintFormProps) => {
       console.log(_creator);
       console.log(tkId);
       console.log(_tokenURI);
+
+      await axios.post(`/api/${chainId.toString()}/collection/asset`, {
+        ...metadata,
+        token_id: tkId,
+        metadata_url: _tokenURI,
+      });
+
+      console.log("successfull");
     }
 
     toggleProgressModal();

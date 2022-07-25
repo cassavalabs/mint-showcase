@@ -77,9 +77,10 @@ export interface Asset {
   name: string;
   description?: string;
   external_link?: string;
-  date_minted?: string;
+  date_minted?: Date;
   asset_collection: Types.ObjectId;
-  traits: Trait[];
+  metadata_url: string;
+  // traits: Trait[];
 }
 
 export interface AssetCollection {

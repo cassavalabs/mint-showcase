@@ -217,6 +217,26 @@ export const getCollectionNft = async (
   collectionAddress: string,
   tokenId: string
 ) => {
+  const nftData = await axios.get(
+    `/api/${blockchain}/asset/${collectionAddress.toLowerCase()}/${tokenId}`
+  );
+
+  const data = await GetMetadata.decodeTokenURI(nftData.data.metadata_url);
+
+  const metadata = {
+    token_id: tokenId,
+    collection_address: collectionAddress,
+    ...data,
+  };
+
+  return metadata;
+};
+
+export const getCollectiondNft = async (
+  blockchain: string,
+  collectionAddress: string,
+  tokenId: string
+) => {
   const chainId = parseInt(blockchain);
   const id = `${collectionAddress}/0x${parseInt(tokenId, 16)}`;
   let nftData: {

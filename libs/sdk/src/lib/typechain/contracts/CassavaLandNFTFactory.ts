@@ -23,6 +23,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../common";
 
 export interface CassavaLandNFTFactoryInterface extends utils.Interface {
@@ -37,11 +38,19 @@ export interface CassavaLandNFTFactoryInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "createERC1155Collection",
-    values: [string, string, string]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "createERC721Collection",
-    values: [string, string, string]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
 
   decodeFunctionResult(
@@ -118,73 +127,73 @@ export interface CassavaLandNFTFactory extends BaseContract {
 
   functions: {
     createERC1155Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     createERC721Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   createERC1155Collection(
-    name: string,
-    symbol: string,
-    baseURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    baseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   createERC721Collection(
-    name: string,
-    symbol: string,
-    baseURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    baseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     createERC1155Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     createERC721Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
   };
 
   filters: {
     "ERC1155CassavaCreated(address,address,string,string)"(
-      collectionAddress?: string | null,
-      creator?: string | null,
+      collectionAddress?: PromiseOrValue<string> | null,
+      creator?: PromiseOrValue<string> | null,
       name?: null,
       symbol?: null
     ): ERC1155CassavaCreatedEventFilter;
     ERC1155CassavaCreated(
-      collectionAddress?: string | null,
-      creator?: string | null,
+      collectionAddress?: PromiseOrValue<string> | null,
+      creator?: PromiseOrValue<string> | null,
       name?: null,
       symbol?: null
     ): ERC1155CassavaCreatedEventFilter;
 
     "ERC721CassavaCreated(address,address,string,string)"(
-      collectionAddress?: string | null,
-      creator?: string | null,
+      collectionAddress?: PromiseOrValue<string> | null,
+      creator?: PromiseOrValue<string> | null,
       name?: null,
       symbol?: null
     ): ERC721CassavaCreatedEventFilter;
     ERC721CassavaCreated(
-      collectionAddress?: string | null,
-      creator?: string | null,
+      collectionAddress?: PromiseOrValue<string> | null,
+      creator?: PromiseOrValue<string> | null,
       name?: null,
       symbol?: null
     ): ERC721CassavaCreatedEventFilter;
@@ -192,33 +201,33 @@ export interface CassavaLandNFTFactory extends BaseContract {
 
   estimateGas: {
     createERC1155Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     createERC721Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createERC1155Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     createERC721Collection(
-      name: string,
-      symbol: string,
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

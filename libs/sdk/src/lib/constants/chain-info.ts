@@ -28,13 +28,13 @@ export const CHAIN_INFO: { [chainId: number]: BaseChainInfo } = {
     rpcUrls: ["https://mainnet.bota.network"],
     nativeCurrency: { name: "Boba", symbol: "ETH", decimals: 18 },
   },
-  // [SupportedChainId.ETHEREUM]: {
-  //   blockExplorerUrls: ["https://etherscan.io"],
-  //   chainName: "Ethereum",
-  //   iconUrls: [`/${SupportedChainId.ETHEREUM}.png`],
-  //   rpcUrls: ["https://rpc.ankr.com/eth"],
-  //   nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
-  // },
+  [SupportedChainId.BITTORRENT_DONAU]: {
+    blockExplorerUrls: ["https://testnet.bttcscan.com"],
+    chainName: "BitTorrent Chain Donau",
+    iconUrls: [`/${SupportedChainId.BITTORRENT_DONAU}.png`],
+    rpcUrls: ["https://pre-rpc.bt.io/"],
+    nativeCurrency: { name: "Bittorrent", symbol: "BTT", decimals: 18 },
+  },
   [SupportedChainId.MOONBEAM]: {
     blockExplorerUrls: ["https://moonscan.io"],
     chainName: "Moonbeam",

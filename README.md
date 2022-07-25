@@ -9,10 +9,10 @@
     <img src="apps/ui/public/logo_white.png" alt="Logo" width="auto" height="90">
   </a>
   <p align="center">
-    An opensource dApp to mint and showcase NFT on Bittorrent, Binance smart chain, Boba network, MoonRiver, MoonBeam and MoonBase blockchain
+    An opensource dApp to mint and showcase NFT on Bittorrent
     <br />
     <a href="https://cassavaland.io">Live Demo dApp</a> |
-    <a href="https://vimeo.com/717736971/0dde70ebd8">Demo video</a>
+    <a href="#">Demo video</a>
   </p>
 </div>
 
@@ -45,17 +45,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-CassavaLand is a platform that allows users to create, explore and sell extra-ordinary NFTs across multiple blockchains. The platform allows users to import their existing NFT collection, customize their profile and share to friends on social media.
-
-We are currently indexing all NFTs on Binance chain, Boba network, moonbeam, moon base alpha and moon river network.
-
-| Network             | Endpoint                                                                   |
-| ------------------- | -------------------------------------------------------------------------- |
-| Moon base alpha     | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonbase  |
-| Moonbeam            | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonbeam  |
-| Moon river          | https://thegraph.com/hosted-service/subgraph/iphyman/cassavaland-moonriver |
-| Binance Smart Chain | https://api.thegraph.com/subgraphs/name/iphyman/rare-cassava               |
-| Boba Network        | https://api.thegraph.com/subgraphs/name/iphyman/cassavaland-boba           |
+CassavaLand is a platform that allows users to create, explore and sell extra-ordinary NFTs across multiple blockchains. The platform allows users to import their existing NFT collection, customize their profile and share to friends on social media.        |
 
 ### Built With
 

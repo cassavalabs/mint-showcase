@@ -18,6 +18,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../../../common";
 
 export interface IERC2981Interface extends utils.Interface {
@@ -32,11 +33,11 @@ export interface IERC2981Interface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "royaltyInfo",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
 
   decodeFunctionResult(
@@ -79,43 +80,43 @@ export interface IERC2981 extends BaseContract {
 
   functions: {
     royaltyInfo(
-      tokenId: BigNumberish,
-      salePrice: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
     >;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
 
   royaltyInfo(
-    tokenId: BigNumberish,
-    salePrice: BigNumberish,
+    tokenId: PromiseOrValue<BigNumberish>,
+    salePrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
     [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
   >;
 
   supportsInterface(
-    interfaceId: BytesLike,
+    interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   callStatic: {
     royaltyInfo(
-      tokenId: BigNumberish,
-      salePrice: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
       [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
     >;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
   };
@@ -124,26 +125,26 @@ export interface IERC2981 extends BaseContract {
 
   estimateGas: {
     royaltyInfo(
-      tokenId: BigNumberish,
-      salePrice: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     royaltyInfo(
-      tokenId: BigNumberish,
-      salePrice: BigNumberish,
+      tokenId: PromiseOrValue<BigNumberish>,
+      salePrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
-      interfaceId: BytesLike,
+      interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

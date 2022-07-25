@@ -1,5 +1,6 @@
 export enum SupportedChainId {
   BINANCE_CHAIN = 56,
+  BITTORRENT_DONAU = 1029,
   BOBA = 288,
   // ETHEREUM = 1,
   MOONBEAM = 1284,
