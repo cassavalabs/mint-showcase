@@ -226,6 +226,7 @@ export const getCollectionNft = async (
   const metadata = {
     token_id: tokenId,
     collection_address: collectionAddress,
+    owner: nftData.data.owner,
     ...data,
   };
 

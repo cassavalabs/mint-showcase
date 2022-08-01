@@ -11,6 +11,7 @@ import {
 import { CHAIN_INFO } from "@cassavaland/sdk";
 import { useActiveChainId } from "../contexts/application";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 const ScrollContent = styled(FlexColumn)`
   max-height: calc(100vh - 11.75rem);
@@ -32,6 +33,10 @@ const OptionButton = styled(SecondaryButton)`
 export default function Login() {
   const { chainId: activeChainId, switchNetwork } = useActiveChainId();
   const { login } = useAuth();
+
+  useEffect(() => {
+    login();
+  }, [login]);
 
   const handleChainSelection = async (chainId: number) => {
     switchNetwork(chainId);

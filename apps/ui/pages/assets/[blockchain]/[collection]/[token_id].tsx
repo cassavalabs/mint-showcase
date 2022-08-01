@@ -84,6 +84,7 @@ export default function AssetPage({
               collectionName={collection.name}
               assetName={nftMetadata.name}
               transferHandler={transferHandler}
+              owner={nftMetadata.owner}
             />
             <DisplayTraits traits={nftMetadata.attributes} />
           </RightColumn>

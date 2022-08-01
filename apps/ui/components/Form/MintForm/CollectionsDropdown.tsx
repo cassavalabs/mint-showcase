@@ -55,6 +55,7 @@ export const CollectionDropdown = () => {
             instance ? (
               <Container>
                 <CollectionDropdownItem
+                  disabled
                   onClick={() => {
                     toggleCollectionModal();
                     instance.hide();

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
-import { AssetCollection } from "@cassavaland/sdk";
+import { walletNameId } from "@cassavaland/sdk";
 import { FlexBetween, FlexColumn, Flex } from "../styles";
 import { RedoIcon, SendIcon, ShareIcon2 } from "../icons";
 import { IconButton } from "../button";
@@ -46,10 +46,12 @@ export const AssetHeader = ({
   collectionName,
   assetName,
   transferHandler,
+  owner,
 }: {
   collectionName: string;
   assetName: string;
   transferHandler: () => void;
+  owner: string;
 }) => {
   return (
     <Container>
@@ -75,8 +77,7 @@ export const AssetHeader = ({
       </TopHeader>
       <Title>{assetName}</Title>
       <Text textAlign="left">
-        Owned by
-        {/* <TextLink href="#">3QrGhJU</TextLink> */}
+        Owned by <TextLink href={`/${owner}`}>{walletNameId(owner)}</TextLink>
       </Text>
     </Container>
   );

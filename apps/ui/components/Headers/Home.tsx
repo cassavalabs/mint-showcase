@@ -139,7 +139,7 @@ export const Header = () => {
             <NavbarRight>
               <IconButton onClick={showSupportedChains}>
                 <RoundImage
-                  src={`/${chainId ? chainId : 1284}.png`}
+                  src={`/${chainId ? chainId : 1029}.png`}
                   width={24}
                   height={24}
                 />

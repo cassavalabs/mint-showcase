@@ -1,6 +1,6 @@
 import shallow from "zustand/shallow";
 import { useEffect } from "react";
-import { ContractTransaction } from "ethers";
+import { BigNumber, ContractTransaction } from "ethers";
 import {
   CREATE_NFT_STEPS,
   pinFileToIPFS,
@@ -157,16 +157,20 @@ export const MintForm = (props: MintFormProps) => {
 
     if (event && event.args) {
       const [_creator, tkId, _tokenURI] = event.args;
-      setTokenId(tkId);
+      const tId = BigNumber.from(tkId).toNumber();
+      setTokenId(tId.toString());
       console.log(_creator);
-      console.log(tkId);
-      console.log(_tokenURI);
+      console.log(tId);
 
-      await axios.post(`/api/${chainId.toString()}/collection/asset`, {
-        ...metadata,
-        token_id: tkId,
-        metadata_url: _tokenURI,
-      });
+      await axios
+        .post(`/api/${chainId.toString()}/collection/asset`, {
+          ...metadata,
+          token_id: tId.toString(),
+          metadata_url: `ipfs://${uri}`,
+          owner: account.toLowerCase(),
+          asset_contract: collection.address.toLowerCase(),
+        })
+        .catch((err) => console.log(err));
 
       console.log("successfull");
     }

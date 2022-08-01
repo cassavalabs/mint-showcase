@@ -4,13 +4,12 @@ import { AssetCollectionModel, AssetModel } from "../../../../../models";
 const handler: NextApiHandler = async (req, res) => {
   const { method } = req;
 
+  const blockchain_id = req.query.blockchain_id as string;
+  const collection = req.query.collection as string;
+
   if (method !== "GET") {
     return res.status(405).send({ error: `Method ${method} is not Allowed` });
   }
-
-  const blockchain_id = req.query.blockchain_id as string;
-  const collection = req.query.collection as string;
-  const token_id = req.query.token_id as string;
 
   try {
     const assetCollectionModel = await AssetCollectionModel();
@@ -20,14 +19,19 @@ const handler: NextApiHandler = async (req, res) => {
     });
 
     const assetModel = await AssetModel();
-    const asset = await assetModel
-      .findOne({ asset_collection: assetCollection._id, token_id: token_id })
-      .select("-asset_collection -_id")
+    const assets = await assetModel
+      .find({
+        asset_collection: assetCollection._id,
+      })
+      .select("-asset_collection")
       .lean();
 
-    res.status(200).send(asset);
+    res.status(200).send(assets);
   } catch (error) {
     console.log(error);
+    res
+      .status(400)
+      .send({ error: "Unable to handle your request at the moment" });
   }
 };
 

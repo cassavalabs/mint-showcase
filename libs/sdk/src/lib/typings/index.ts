@@ -80,6 +80,7 @@ export interface Asset {
   date_minted?: Date;
   asset_collection: Types.ObjectId;
   metadata_url: string;
+  owner: string;
   // traits: Trait[];
 }
 

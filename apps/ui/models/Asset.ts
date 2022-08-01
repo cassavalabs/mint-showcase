@@ -21,6 +21,7 @@ const schema = new Schema<AssetSchema>(
     metadata_url: { type: String, required: true },
     date_minted: { type: Date, required: false, default: null },
     asset_collection: { type: Schema.Types.ObjectId, ref: "AssetCollection" },
+    owner: { type: String, required: true },
     // traits: [{ type: Schema.Types.ObjectId, ref: "Trait" }],
   },
   {

@@ -20,6 +20,7 @@ contract ERC721Cassava is ERC721Base {
     ) ERC721(name, symbol) {
         _setBaseURI(baseURI);
         _nextTokenId = 1;
+        _setDefaultApproval(_msgSender(), true);
     }
 
     function mint(string calldata tokenURI_)

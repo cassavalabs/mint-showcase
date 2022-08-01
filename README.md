@@ -45,7 +45,9 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-CassavaLand is a platform that allows users to create, explore and sell extra-ordinary NFTs across multiple blockchains. The platform allows users to import their existing NFT collection, customize their profile and share to friends on social media.        |
+CassavaLand is a platform that allows users to create, explore and sell extra-ordinary NFTs across multiple blockchains. The platform allows users to import their existing NFT collection, customize their profile and share to friends on social media.
+
+Cassavaland NFT factory contract [Bttc scan](https://testnet.bttcscan.com/address/0x31b5da73d8c972b84193b7af0d8503bfd01a4583)
 
 ### Built With
 
@@ -57,6 +59,7 @@ CassavaLand is a platform that allows users to create, explore and sell extra-or
 - [Lingui](https://lingui.js.org/)
 - [MongoDB](https://mongodb.com/)
 - [Thegraph](https://thegraph.com/)
+- [Solidity](https://soliditylang.org/)
 
 <!-- GETTING STARTED -->
 

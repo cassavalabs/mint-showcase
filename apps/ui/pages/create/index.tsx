@@ -33,22 +33,22 @@ export default function SelectCollectionType() {
           You are currently connected to{" "}
           {activeChainInfo ? activeChainInfo.chainName : "no blockchain"}{" "}
           Network, select single if you do like to create a one of a kind NFT
-          (ERC721) or multiple if you want ERC1155 compatible NFTs.
+          (BRC721) or multiple if you want BRC1155 (coming soon) compatible NFTs.
         </Text>
         <FormGroup>
           <FormRow>
             <FormColumn>
               <PrimaryButton
                 disabled={!activeChainInfo}
-                onClick={() => router.push("/create/erc721")}
+                onClick={() => router.push("/create/brc721")}
               >
                 Single
               </PrimaryButton>
             </FormColumn>
             <FormColumn>
               <PrimaryButton
-                disabled={!activeChainInfo}
-                onClick={() => router.push("/create/erc1155")}
+                disabled
+                onClick={() => router.push("/create/brc1155")}
               >
                 Multiple
               </PrimaryButton>

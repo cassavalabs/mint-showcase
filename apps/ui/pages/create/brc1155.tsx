@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { BoxedPage, Page, Text } from "@cassavaland/uikits";
 import { MintForm } from "../../components/Form";
 

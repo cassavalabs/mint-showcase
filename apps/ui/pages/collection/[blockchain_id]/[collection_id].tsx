@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Grid, Text } from "@cassavaland/uikits";
 import {
   getNftCardWidth,
-  withSessionSsr,
   NFTCardProps,
   getCollectionNfts,
 } from "@cassavaland/sdk";
@@ -52,23 +51,21 @@ export default function Collection({ collection }) {
   );
 }
 
-export const getServerSideProps = withSessionSsr(
-  async function getServerSideProps({ req, params }) {
-    const blockchainId = params.blockchain_id as string;
-    const collectionId = params.collection_id as string;
+export async function getServerSideProps({ req, params }) {
+  const blockchainId = params.blockchain_id as string;
+  const collectionId = params.collection_id as string;
 
-    const collection = await fetchCollection(collectionId, blockchainId);
+  const collection = await fetchCollection(collectionId, blockchainId);
 
-    if (!collection) {
-      return {
-        notFound: true,
-      };
-    }
-
+  if (!collection) {
     return {
-      props: {
-        collection,
-      },
+      notFound: true,
     };
   }
-);
+
+  return {
+    props: {
+      collection,
+    },
+  };
+}

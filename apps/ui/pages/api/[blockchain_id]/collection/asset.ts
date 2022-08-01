@@ -6,6 +6,7 @@ type Payload = TokenMetaData & {
   asset_contract: string;
   token_id: string;
   metadata_url: string;
+  owner: string;
 };
 
 const handler: NextApiHandler = async (req, res) => {
@@ -40,6 +41,7 @@ const handler: NextApiHandler = async (req, res) => {
         external_link: payload.external_url,
         date_minted: Date.now(),
         metadata_url: payload.metadata_url,
+        owner: payload.owner,
       },
       { upsert: true, new: true }
     );

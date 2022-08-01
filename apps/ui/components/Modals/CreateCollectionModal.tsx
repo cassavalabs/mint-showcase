@@ -103,7 +103,7 @@ export default function CreateCollection() {
     updateProgress(0, 1);
     const receipt = await tx.wait();
     const event = receipt?.events?.find(
-      (event) => event.event === "ERC721CassavaCreated" 
+      (event) => event.event === "ERC721CassavaCreated"
     );
 
     if (event && event.args) {
