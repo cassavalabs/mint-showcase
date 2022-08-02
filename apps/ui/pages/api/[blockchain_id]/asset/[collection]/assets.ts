@@ -23,10 +23,28 @@ const handler: NextApiHandler = async (req, res) => {
       .find({
         asset_collection: assetCollection._id,
       })
-      .select("-asset_collection")
+      .select("-_id name token_id image_uri")
       .lean();
 
-    res.status(200).send(assets);
+    const resp = [];
+
+    assets.map((asset) => {
+      resp.push({
+        collection_name: assetCollection.name,
+        collection_address: assetCollection.address,
+        description: assetCollection.description,
+        blockchain: blockchain_id,
+        ...asset,
+      });
+    });
+
+    res.status(200).send({
+      // collection_name: assetCollection.name,
+      // collection_address: assetCollection.address,
+      // description: assetCollection.description,
+      // blockchain: blockchain_id,
+      assets: resp,
+    });
   } catch (error) {
     console.log(error);
     res

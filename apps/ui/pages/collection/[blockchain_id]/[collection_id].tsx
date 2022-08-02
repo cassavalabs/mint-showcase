@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { Grid, Text } from "@cassavaland/uikits";
 import {
   getNftCardWidth,
   NFTCardProps,
   getCollectionNfts,
+  decodeURI,
 } from "@cassavaland/sdk";
 import Layout from "../../../components/Layouts/Collection";
 import { fetchCollection } from "../../../libs/fetch-collections";
 
 export default function Collection({ collection }) {
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [nfts, setNfts] = useState<NFTCardProps[] | null>(null);
+  const [nfts, setNfts] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchNfts = async () => {
@@ -26,7 +28,31 @@ export default function Collection({ collection }) {
       setLoading(false);
     };
 
-    fetchNfts();
+    const fetchData = async () => {
+      const nftData: any = await axios.get(
+        `/api/${
+          collection.blockchain
+        }/asset/${collection.address.toLowerCase()}/assets`
+      );
+
+      const assets: any = [];
+      //TODO refactor
+      nftData?.data?.assets?.map((asset: any) => {
+        assets.push({
+          ...asset,
+          image_uri: decodeURI(asset.image_uri).uri,
+        });
+      });
+
+      if (assets && assets.length > 0) {
+        setNfts(assets);
+        collection.total_supply = assets.length;
+      }
+      setLoading(false);
+    };
+
+    // fetchNfts();
+    fetchData();
   }, []);
 
   return (
