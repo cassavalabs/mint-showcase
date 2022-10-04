@@ -117,3 +117,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 - Twitter - [@cassavaland](https://twitter.com/cassavaland)
 - Discord - @iphyman#9280
+
+## Progress
+Active development continues in a private repository, will be opened to the general public after testing and launching of the complete marketplace in few weeks.
